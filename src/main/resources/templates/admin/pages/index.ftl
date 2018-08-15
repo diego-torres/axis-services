@@ -1,3 +1,5 @@
+<#import "/spring.ftl" as spring />
+<#assign xhtmlCompliant = true in spring>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +38,14 @@
 </head>
 
 <body>
-
+<div style="display:none">
+<form name="logoutForm" id="logoutForm" action="<@spring.url '/sso/logout' />" method="post">
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+    <input type="submit" name="btnSubmit" value="Logout"/>
+</form>
+</div>
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -253,7 +262,8 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li>
+							<a href="#" onclick="document.forms['logoutForm'].submit();return false;"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -261,6 +271,7 @@
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
+            
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
