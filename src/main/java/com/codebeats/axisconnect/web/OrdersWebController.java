@@ -31,4 +31,28 @@ public class OrdersWebController {
 		model.addAttribute("principal", principal.getName());
 		return "admin/pages/orders/list";
 	}
+
+	/**
+	 * 
+	 * @param auth
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(path = "/create")
+	public String createOrder(Authentication auth, Model model) {
+		Principal principal = (Principal) auth.getPrincipal();
+		model.addAttribute("principal", principal.getName());
+		return "admin/pages/orders/create";
+	}
+
+	/**
+	 * 
+	 * @param auth
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(path = "/upload")
+	public String uploadOrder(Authentication auth, Model model) {
+		return "admin/pages/orders/upload";
+	}
 }
