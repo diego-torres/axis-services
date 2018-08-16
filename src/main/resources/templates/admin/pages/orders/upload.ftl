@@ -1,5 +1,5 @@
 <#import "/spring.ftl" as spring />
-<#import "../lib/navigation.ftl" as navigation />
+<#import "../../lib/navigation.ftl" as navigation />
 <#assign xhtmlCompliant = true in spring />
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Axis Connect US - Create Service Order</title>
+    <title>Axis Connect US - Upload Service Order</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap_3_3_7/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Dashboard</h1>
+                    <h1 class="page-header">Upload Service Orders</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

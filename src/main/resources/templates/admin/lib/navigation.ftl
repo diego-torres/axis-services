@@ -250,13 +250,13 @@
                     <a href="/admin/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="/admin/orders"><i class="fa fa-table fa-fw"></i> Orders</a>
+                    <a href="/orders/"><i class="fa fa-table fa-fw"></i> Orders</a>
                 </li>
                 <li>
-                    <a href="/admin/orders/create"><i class="fa fa-edit fa-fw"></i> Create</a>
+                    <a href="/orders/create"><i class="fa fa-edit fa-fw"></i> Create</a>
                 </li>
                 <li>
-                    <a href="/admin/orders/upload"><i class="fa fa-files-o fa-fw"></i> Upload</a>
+                    <a href="/orders/upload"><i class="fa fa-files-o fa-fw"></i> Upload</a>
                 </li>
             </ul>
         </div>
