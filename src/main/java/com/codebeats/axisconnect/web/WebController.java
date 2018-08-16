@@ -17,4 +17,9 @@ public class WebController {
 		return "public/index";
 	}
 
+	@GetMapping(path = "/error")
+	public String error() {
+		return "public/error";
+	}
+
 }

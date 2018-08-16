@@ -57,7 +57,7 @@
             			<th>Edit</th>
             			<th>Hot</th>
             			<th>Axis Ref</th>
-            			<th>PO / Customer REf</th>
+            			<th>PO / Customer Ref</th>
             			<th>SO / Vendor Ref</th>
             			<th>Requested Date</th>
             			<th>Shipping Date</th>
