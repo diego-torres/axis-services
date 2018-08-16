@@ -250,7 +250,10 @@
                     <a href="/admin/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="/orders/"><i class="fa fa-table fa-fw"></i> Orders</a>
+                    <a href="/orders/"><i class="fa fa-table fa-fw"></i> Orders (Active)</a>
+                </li>
+                <li>
+                    <a href="/orders/closed"><i class="fa fa-table fa-fw"></i> Orders (Closed)</a>
                 </li>
                 <li>
                     <a href="/orders/create"><i class="fa fa-edit fa-fw"></i> Create</a>
