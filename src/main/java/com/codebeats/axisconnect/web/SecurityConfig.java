@@ -3,6 +3,7 @@
  */
 package com.codebeats.axisconnect.web;
 
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter;
@@ -35,14 +36,27 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		auth.authenticationProvider(keycloakAuthenticationProvider());
 	}
 
-	//@Autowired
-	//public KeycloakClientRequestFactory keycloakClientRequestFactory;
+	// @Autowired
+	// public KeycloakClientRequestFactory keycloakClientRequestFactory;
 
-	/*@Bean
-	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public KeycloakRestTemplate keycloakRestTemplate() {
-		return new KeycloakRestTemplate(keycloakClientRequestFactory);
-	}*/
+	/*
+	 * @Bean
+	 * 
+	 * @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE) public KeycloakRestTemplate
+	 * keycloakRestTemplate() { return new
+	 * KeycloakRestTemplate(keycloakClientRequestFactory); }
+	 */
+
+	/**
+	 * Uses the properties in application.properties to configure keycloak; also
+	 * allows to override with environment variables and execution parameters
+	 * 
+	 * @return
+	 */
+	@Bean
+	public KeycloakSpringBootConfigResolver KeycloakConfigResolver() {
+		return new KeycloakSpringBootConfigResolver();
+	}
 
 	@Bean
 	@Override
@@ -72,9 +86,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		super.configure(http);
-		http.authorizeRequests()
-		.antMatchers("/admin/*").hasAuthority("user")
-		.anyRequest().permitAll();
+		http.authorizeRequests().antMatchers("/admin/*").hasAuthority("user").anyRequest().permitAll();
 	}
 
 }
