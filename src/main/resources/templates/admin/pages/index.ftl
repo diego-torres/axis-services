@@ -1,6 +1,6 @@
 <#import "/spring.ftl" as spring />
 <#import "../lib/navigation.ftl" as navigation />
-<#assign xhtmlCompliant = true in spring>
+<#assign xhtmlCompliant = true in spring />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,14 +39,6 @@
 </head>
 
 <body>
-<div style="display:none">
-<form name="logoutForm" id="logoutForm" action="<@spring.url '/sso/logout' />" method="post">
-    <input type="hidden"
-           name="${_csrf.parameterName}"
-           value="${_csrf.token}"/>
-    <input type="submit" name="btnSubmit" value="Logout"/>
-</form>
-</div>
     <div id="wrapper">
 
         <@navigation.nav />

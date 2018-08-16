@@ -1,4 +1,12 @@
 <#macro nav>
+<div style="display:none">
+<form name="logoutForm" id="logoutForm" action="<@spring.url '/sso/logout' />" method="post">
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+    <input type="submit" name="btnSubmit" value="Logout"/>
+</form>
+</div>
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
