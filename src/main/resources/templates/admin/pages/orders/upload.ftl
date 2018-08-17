@@ -48,6 +48,7 @@
             </div>
             <!-- /.row -->
             <form role="form" name="ordersFileForm" enctype="multipart/form-data" action="/orders/upload" method="POST">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
