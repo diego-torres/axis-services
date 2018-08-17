@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,6 +20,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ServiceOrderService {
+
+	@Autowired
+	private PartialServiceOrderRepository psoRepository;
+
+	public void addPartialServiceOrder(PartialServiceOrder pso) {
+		PartialServiceOrderComment psoc = new PartialServiceOrderComment();
+		psoc.setComment("ORDER CREATED");
+		psoc.setFromUser("system");
+		pso.addComment(psoc);
+		psoRepository.save(pso);
+	}
+
 	/**
 	 * 
 	 * @return
@@ -30,6 +44,32 @@ public class ServiceOrderService {
 					randomDate((int) LocalDate.now().toEpochDay() - 30), randomDate((int) LocalDate.now().toEpochDay()),
 					randomDate((int) LocalDate.now().toEpochDay()), randomDate((int) LocalDate.now().toEpochDay()),
 					getShipper(r.nextInt(10)), getConsignee(r.nextInt(10)), "Autoparts", "Fedex", "LTL", "BOOKED",
+					r.nextInt(100), "LTL", randomOrder(5), randomOrder(5), randomOrder(5), r.nextInt(100)));
+		}
+
+		List<PartialServiceOrder> psoList = new ArrayList<>();
+		psoRepository.findAll().spliterator().forEachRemaining(psoList::add);
+		result.addAll(psoList.stream()
+				.map(pso -> new ServiceOrder(pso.getId(), false, pso.getCustomerRef(), pso.getVendorRef(), null, null,
+						null, pso.getDeliveryDate(), null, null, "IN PROGRESS ORDER ENTRY", null, null, "ORDER ENTRY",
+						0, null, null, null, null, null))
+				.collect(Collectors.toList()));
+
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<ServiceOrder> getClosedServiceOrders() {
+		List<ServiceOrder> result = new ArrayList<>();
+		Random r = new Random();
+		for (int i = 1; i <= 50; i++) {
+			result.add(new ServiceOrder(r.nextInt(1000), randomBoolean(4), randomOrder(5), randomOrder(7),
+					randomDate((int) LocalDate.now().toEpochDay() - 30), randomDate((int) LocalDate.now().toEpochDay()),
+					randomDate((int) LocalDate.now().toEpochDay()), randomDate((int) LocalDate.now().toEpochDay()),
+					getShipper(r.nextInt(10)), getConsignee(r.nextInt(10)), "Autoparts", "Fedex", "LTL", "CLOSED",
 					r.nextInt(100), "LTL", randomOrder(5), randomOrder(5), randomOrder(5), r.nextInt(100)));
 		}
 

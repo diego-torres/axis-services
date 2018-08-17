@@ -51,7 +51,9 @@
 				<!-- /.col-lg-12 -->
 			</div>
 			<!-- /.row -->
-			<form role="form">
+			<form name="serviceOrderForm" id="serviceOrderForm" action="/orders/create" method="POST" role="form">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<input type="hidden" name="startProcessInstance" id="startProcessInstance" value="false" />
 			<div class="row">
 				<div class="col-lg-12">
 					
@@ -73,7 +75,7 @@
 						<div class="form-group">
 							<button id="btnSubmit" name="btnSubmit" type="submit"
 								class="btn btn-primary">Save</button>
-							<button id="btnReset" name="btnReset" type="reset"
+							<button onclick="startProcess();" id="btnReset" name="btnReset" type="button"
 								class="btn btn-success">Start Process</button>
 						</div>
 				</div>
@@ -123,12 +125,12 @@
                                     <div class="col-lg-12">
                                 		<div class="form-group">
 											<label>Street Address Line 1</label> <input
-												class="form-control" id="fromStreetAddressLine1" name="fromStreetAddressLine1"
+												class="form-control" id="fromStreet" name="fromStreet"
 												type="text" placeholder="Street Address Line 1"></input>
 										</div><!-- /.form-group -->
 										<div class="form-group">
 											<label>Street Address Line 2</label> <input
-												class="form-control" id="fromStreetAddressLine2" name="fromStreetAddressLine2"
+												class="form-control" id="fromStreet2" name="fromStreet2"
 												type="text" placeholder="Street Address Line 2"></input>
 										</div><!-- /.form-group -->
 										<div class="form-group">
@@ -153,7 +155,7 @@
 										</div><!-- /.form-group -->
 										<div class="form-group">
 											<label>Map Location Ref</label> <input
-												class="form-control" id="fromMapLocationRef" name="fromMapLocationRef"
+												class="form-control" id="fromLocation" name="fromLocation"
 												type="text" placeholder="Map Location Reference"></input>
 										</div><!-- /.form-group -->
                                 	</div><!-- /.col-lg-12 -->
@@ -162,12 +164,12 @@
                                     <div class="col-lg-12">
                                 		<div class="form-group">
 											<label>Street Address Line 1</label> <input
-												class="form-control" id="toStreetAddressLine1" name="toStreetAddressLine1"
+												class="form-control" id="toStreet" name="toStreet"
 												type="text" placeholder="Street Address Line 1"></input>
 										</div><!-- /.form-group -->
 										<div class="form-group">
 											<label>Street Address Line 2</label> <input
-												class="form-control" id="toStreetAddressLine2" name="toStreetAddressLine2"
+												class="form-control" id="toStreet2" name="toStreet2"
 												type="text" placeholder="Street Address Line 2"></input>
 										</div><!-- /.form-group -->
 										<div class="form-group">
@@ -192,7 +194,7 @@
 										</div><!-- /.form-group -->
 										<div class="form-group">
 											<label>Map Location Ref</label> <input
-												class="form-control" id="toMapLocationRef" name="toMapLocationRef"
+												class="form-control" id="toLocation" name="toLocation"
 												type="text" placeholder="Map Location Reference"></input>
 										</div><!-- /.form-group -->
                                 	</div><!-- /.col-lg-12 -->

@@ -59,13 +59,8 @@
             			<th>Axis Ref</th>
             			<th>PO / Customer Ref</th>
             			<th>SO / Vendor Ref</th>
-            			<th>Requested Date</th>
-            			<th>Shipping Date</th>
-            			<th>ETA</th>
-            			<th>Delivery</th>
             			<th>Shipper</th>
             			<th>Consignee</th>
-            			<th>Comments Log</th>
             			<th>Carrier</th>
             			<th>Service</th>
             			<th>Status</th>
@@ -75,6 +70,11 @@
             			<th>Pickup #</th>
             			<th>PRO #</th>
             			<th>Duration</th>
+            			<th>Requested Date</th>
+            			<th>Shipping Date</th>
+            			<th>ETA</th>
+            			<th>Delivery</th>
+            			<th>Comments Log</th>
             		</thead>
             		<tbody>
             			<#list serviceOrders as order>
@@ -82,25 +82,29 @@
             					<td>&nbsp;</td>
             					<td><i class="fa fa-pencil fa-fw" /></td>
             					<td><#if order.hot><i class="fa fa-fire fa-fw" /></#if></td>
-            					<td>AX${order.id?string["000"]}</td>
-            					<td>${order.custRef}</td>
-            					<td>${order.vendorRef}</td>
-            					<td>${order.requested?date}</td>
-            					<td>${order.shipping?date}</td>
-            					<td>${order.eta?date}</td>
-            					<td>${order.delivery?date}</td>
-            					<td>${order.shipper}</td>
-            					<td>${order.consignee}</td>
-            					<td>${order.comments}</td>
-            					<td>${order.carrier}</td>
-            					<td>${order.service}</td>
+            					<#if order.status == "ORDER ENTRY">
+            						<td>OE${order.id?string["000"]}</td>
+            					<#else>
+            						<td>AX${order.id?string["000"]}</td>
+            					</#if>
+            					<td><#if order.custRef??>${order.custRef}</#if></td>
+            					<td><#if order.vendorRef??>${order.vendorRef}</#if></td>
+            					<td><#if order.shipper??>${order.shipper}</#if></td>
+            					<td><#if order.consignee??>${order.consignee}</#if></td>
+            					<td><#if order.carrier??>${order.carrier}</#if></td>
+            					<td><#if order.service??>${order.service}</#if></td>
             					<td>${order.status}</td>
-            					<td>${order.hu}</td>
-            					<td>${order.wt}</td>
+            					<td><#if order.hu??>${order.hu}</#if></td>
+            					<td><#if order.wt??>${order.wt}</#if></td>
             					<td><#if order.quoteId??>${order.quoteId}</#if></td>
             					<td><#if order.pickupId??>${order.pickupId}</#if></td>
             					<td><#if order.proId??>${order.proId}</#if></td>
-            					<td>${order.duration}</td>
+            					<td><#if order.duration??>${order.duration}</#if></td>
+            					<td><#if order.requested??>${order.requested?date}</#if></td>
+            					<td><#if order.shipping??>${order.shipping?date}</#if></td>
+            					<td><#if order.eta??>${order.eta?date}</#if></td>
+            					<td><#if order.delivery??>${order.delivery?date}</#if></td>
+            					<td><#if order.comments??>${order.comments}</#if></td>
             				</tr>
             			</#list>
             		</tbody>

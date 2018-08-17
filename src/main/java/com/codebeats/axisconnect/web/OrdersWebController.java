@@ -12,15 +12,19 @@ import java.util.Date;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.codebeats.axisconnect.web.serviceOrders.PartialServiceOrder;
 import com.codebeats.axisconnect.web.serviceOrders.ServiceOrderService;
 
 /**
@@ -37,6 +41,11 @@ public class OrdersWebController {
 
 	@Autowired
 	public ServiceOrderService orderService;
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true, 10));
+	}
 
 	/**
 	 * 
@@ -62,7 +71,7 @@ public class OrdersWebController {
 	public String ordersClosedList(Authentication auth, Model model) {
 		Principal principal = (Principal) auth.getPrincipal();
 		model.addAttribute("principal", principal.getName());
-		model.addAttribute("serviceOrders", orderService.getActiveServiceOrders());
+		model.addAttribute("serviceOrders", orderService.getClosedServiceOrders());
 		return "admin/pages/orders/list";
 	}
 
@@ -85,6 +94,21 @@ public class OrdersWebController {
 	 * @param model
 	 * @return
 	 */
+	@PostMapping("/create")
+	public String createServiceOrder(Authentication auth, Model model, PartialServiceOrder pso) {
+		System.out.println("PSO: " + pso);
+		if (!pso.isStartProcessInstance()) {
+			orderService.addPartialServiceOrder(pso);
+		}
+		return "redirect:/orders/";
+	}
+
+	/**
+	 * 
+	 * @param auth
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(path = "/upload")
 	public String uploadOrder(Authentication auth, Model model) {
 		return "admin/pages/orders/upload";
@@ -96,7 +120,7 @@ public class OrdersWebController {
 	 * @return
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	@PostMapping("/upload")
 	public String uploadFile(@RequestParam("ordersFile") MultipartFile[] ordersFiles) throws IOException {
 		System.out.println("Uploading!");
 		for (MultipartFile f : ordersFiles) {
@@ -109,4 +133,5 @@ public class OrdersWebController {
 	private String nowToFileName(String extension) {
 		return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "." + extension;
 	}
+
 }
