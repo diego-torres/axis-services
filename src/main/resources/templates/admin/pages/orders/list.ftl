@@ -53,8 +53,8 @@
             <div class="row">
             	<table id="service_orders_table" class="display">
             		<thead>
+            			<th>&nbsp;</th>
             			<th>Detail</th>
-            			<th>Edit</th>
             			<th>Hot</th>
             			<th>Axis Ref</th>
             			<th>PO / Customer Ref</th>
@@ -79,7 +79,7 @@
             		<tbody>
             			<#list serviceOrders as order>
             				<tr>
-            					<td><i class="fa fa-comments fa-fw" /></td>
+            					<td>&nbsp;</td>
             					<td><i class="fa fa-pencil fa-fw" /></td>
             					<td><#if order.hot><i class="fa fa-fire fa-fw" /></#if></td>
             					<td>AX${order.id?string["000"]}</td>

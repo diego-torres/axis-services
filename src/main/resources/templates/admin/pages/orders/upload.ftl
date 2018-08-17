@@ -47,6 +47,24 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+            <form role="form" name="ordersFileForm" enctype="multipart/form-data" action="/orders/upload" method="POST">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+						<label>Upload Orders In File:</label> 
+						<input style="height:150px;"
+							class="form-control" id="ordersFile" name="ordersFile"
+							type="file" placeholder="Orders File" accept=".xlsx, .xls, .csv"></input>
+					</div>
+					<div class="form-group">
+							<button id="btnSubmit" name="btnSubmit" type="submit"
+								class="btn btn-primary">Upload File</button>
+						</div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            </form>
+            <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
 
