@@ -239,18 +239,18 @@
                                                 <#if cMinutes < 5> 
                                                 	just now
                                                 <#elseif cMinutes < 60> 
-                                                	${cMinutes} mins ago 
+                                                	${cMinutes?floor} mins ago (${comment.created})
                                                 <#else>
                                                 	<#assign cHours = cMinutes / 60?int>
                                                 	<#if cHours < 24> 
-                                                		${cHours} hours ago
+                                                		${cHours?floor} hours ago (${comment.created})
                                                 	<#else>
                                                 		<#assign cDays = cHours / 24?int>
                                                 		<#if cDays < 90>
-                                                			${cDays} days ago
+                                                			${cDays?floor} days ago (${comment.created})
                                                 		<#else>
                                                 			<#assign cMonths = cDays / 30?int>
-                                                			${cDays} months ago (${comment.created})
+                                                			${cMonths?floor} months ago (${comment.created})
                                                 		</#if>
                                                 	</#if>
                                                 </#if>
