@@ -4,7 +4,9 @@
 package com.codebeats.axisconnect.web.serviceOrders;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author dtorresf
@@ -27,6 +31,10 @@ public class PartialServiceOrderComment implements Serializable {
 	private Integer id;
 	private String comment;
 	private String fromUser;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created", nullable = false, updatable = false)
+	private Date created = new Date();
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "partial_service_order_id")
 	private PartialServiceOrder partialServiceOrder;
@@ -55,6 +63,14 @@ public class PartialServiceOrderComment implements Serializable {
 		this.fromUser = fromUser;
 	}
 
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
 	public PartialServiceOrder getPartialServiceOrder() {
 		return partialServiceOrder;
 	}
@@ -65,7 +81,8 @@ public class PartialServiceOrderComment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PartialServiceOrderComment [id=" + id + ", comment=" + comment + ", fromUser=" + fromUser + "]";
+		return "PartialServiceOrderComment [id=" + id + ", comment=" + comment + ", fromUser=" + fromUser + ", created="
+				+ created + ", partialServiceOrder=" + partialServiceOrder + "]";
 	}
 
 	@Override

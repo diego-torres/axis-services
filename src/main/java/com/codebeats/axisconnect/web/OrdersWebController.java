@@ -99,7 +99,7 @@ public class OrdersWebController {
 	public String createServiceOrder(Authentication auth, Model model, PartialServiceOrder pso) {
 		System.out.println("PSO: " + pso);
 		if (!pso.isStartProcessInstance()) {
-			orderService.addPartialServiceOrder(pso);
+			orderService.addPartialServiceOrder(pso, auth.getPrincipal().toString());
 		}
 		return "redirect:/orders/";
 	}
@@ -118,6 +118,10 @@ public class OrdersWebController {
 		if (sOrderId.startsWith("AX")) {
 			return "admin/pages/orders/detail";
 		} else {
+			PartialServiceOrder pso = orderService.getPartialServiceOrderById(id);
+			model.addAttribute("order", pso);
+			model.addAttribute("principal", auth.getPrincipal());
+			
 			return "admin/pages/orders/update";
 		}
 	}

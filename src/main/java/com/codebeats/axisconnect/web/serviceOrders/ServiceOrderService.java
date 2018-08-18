@@ -24,12 +24,16 @@ public class ServiceOrderService {
 	@Autowired
 	private PartialServiceOrderRepository psoRepository;
 
-	public void addPartialServiceOrder(PartialServiceOrder pso) {
+	public void addPartialServiceOrder(PartialServiceOrder pso, String principal) {
 		PartialServiceOrderComment psoc = new PartialServiceOrderComment();
-		psoc.setComment("ORDER CREATED");
+		psoc.setComment("ORDER CREATED by " + principal);
 		psoc.setFromUser("system");
 		pso.addComment(psoc);
 		psoRepository.save(pso);
+	}
+
+	public PartialServiceOrder getPartialServiceOrderById(Integer id) {
+		return psoRepository.findById(id).orElse(null);
 	}
 
 	/**
@@ -57,7 +61,7 @@ public class ServiceOrderService {
 
 		return result;
 	}
-	
+
 	/**
 	 * 
 	 * @return
