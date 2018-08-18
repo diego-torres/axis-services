@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,6 +102,24 @@ public class OrdersWebController {
 			orderService.addPartialServiceOrder(pso);
 		}
 		return "redirect:/orders/";
+	}
+
+	/**
+	 * 
+	 * @param auth
+	 * @param model
+	 * @param sOrderId
+	 * @return
+	 */
+	@GetMapping("/details/{sOrderId}")
+	public String editServiceOrder(Authentication auth, Model model, @PathVariable String sOrderId) {
+		String sId = sOrderId.substring(2);
+		Integer id = Integer.parseInt(sId);
+		if (sOrderId.startsWith("AX")) {
+			return "admin/pages/orders/detail";
+		} else {
+			return "admin/pages/orders/update";
+		}
 	}
 
 	/**

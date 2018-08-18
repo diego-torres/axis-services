@@ -80,13 +80,14 @@
             			<#list serviceOrders as order>
             				<tr>
             					<td>&nbsp;</td>
-            					<td><i class="fa fa-pencil fa-fw" /></td>
-            					<td><#if order.hot><i class="fa fa-fire fa-fw" /></#if></td>
             					<#if order.status == "ORDER ENTRY">
+            						<td><i style="cursor:pointer;" onclick="return editServiceOrder('OE${order.id?string["000"]}');" class="fa fa-pencil fa-fw" /></td>
             						<td>OE${order.id?string["000"]}</td>
             					<#else>
+            						<td><i style="cursor:pointer;" onclick="return editServiceOrder('AX${order.id?string["000"]}');" class="fa fa-pencil fa-fw" /></td>
             						<td>AX${order.id?string["000"]}</td>
             					</#if>
+            					<td><#if order.hot><i class="fa fa-fire fa-fw" /></#if></td>
             					<td><#if order.custRef??>${order.custRef}</#if></td>
             					<td><#if order.vendorRef??>${order.vendorRef}</#if></td>
             					<td><#if order.shipper??>${order.shipper}</#if></td>
@@ -128,6 +129,7 @@
     
     <!-- Data Tables Plugin JavaScript -->
     <script src="../vendor/DataTables/datatables.min.js"></script>
+    <script src="../vendor/DataTables/Buttons-1.5.2/js/datatables.buttons.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
