@@ -31,7 +31,7 @@
     <nav class="navbar navbar-light static-top">
       <div class="container">
         <a class="navbar-brand" href="http://axisconnect.us"><img src="/img/logaxis_transparent.png" alt="Axis Connect US" /></a>
-        <a class="btn btn-primary" href="/admin/">Log In</a>
+        <a class="btn btn-primary" href="/admin">Log In</a>
       </div>
     </nav>
 

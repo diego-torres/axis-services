@@ -130,7 +130,6 @@
     
     <!-- Data Tables Plugin JavaScript -->
     <script src="../vendor/DataTables/datatables.min.js"></script>
-    <script src="../vendor/DataTables/Buttons-1.5.2/js/datatables.buttons.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

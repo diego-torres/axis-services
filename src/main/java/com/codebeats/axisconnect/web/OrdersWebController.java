@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codebeats.axisconnect.web.serviceOrders.PartialServiceOrder;
+import com.codebeats.axisconnect.web.serviceOrders.PartialServiceOrderComment;
 import com.codebeats.axisconnect.web.serviceOrders.ServiceOrderService;
 
 /**
@@ -96,12 +100,39 @@ public class OrdersWebController {
 	 * @return
 	 */
 	@PostMapping("/create")
-	public String createServiceOrder(Authentication auth, Model model, PartialServiceOrder pso) {
-		System.out.println("PSO: " + pso);
+	public String createServiceOrder(Authentication auth, PartialServiceOrder pso) {
 		if (!pso.isStartProcessInstance()) {
 			orderService.addPartialServiceOrder(pso, auth.getPrincipal().toString());
 		}
 		return "redirect:/orders/";
+	}
+
+	/**
+	 * 
+	 * @param orderId
+	 * @return
+	 */
+	@GetMapping("partial/{orderId}/comments")
+	@ResponseBody
+	public List<PartialServiceOrderComment> getPartialServiceOrderComments(@PathVariable("orderId") Integer orderId) {
+		PartialServiceOrder pso = orderService.getPartialServiceOrderById(orderId);
+		return pso.getComments();
+	}
+
+	@PostMapping("partial/comments")
+	@ResponseBody
+	public PartialServiceOrderComment addPartialOrderComment(@RequestBody PartialServiceOrderComment comment) {
+		PartialServiceOrder pso = orderService.getPartialServiceOrderById(comment.getId());
+		if (pso == null)
+			return null;
+		PartialServiceOrderComment psoc = new PartialServiceOrderComment();
+		psoc.setComment(comment.getComment());
+
+		psoc.setFromUser("system");
+		// psoc.setFromUser(auth.getPrincipal().toString());
+		pso.addComment(psoc);
+		orderService.updatePartialServiceOrder(pso);
+		return psoc;
 	}
 
 	/**
@@ -120,10 +151,22 @@ public class OrdersWebController {
 		} else {
 			PartialServiceOrder pso = orderService.getPartialServiceOrderById(id);
 			model.addAttribute("order", pso);
-			model.addAttribute("principal", auth.getPrincipal());
-			
+			String principal = "Anonymous";
+			if (auth != null) {
+				principal = auth.getPrincipal().toString();
+			}
+			model.addAttribute("principal", principal);
+
 			return "admin/pages/orders/update";
 		}
+	}
+
+	@PostMapping("/update")
+	public String updateServiceOrder(PartialServiceOrder pso) {
+		if (!pso.isStartProcessInstance()) {
+			orderService.updatePartialServiceOrder(pso);
+		}
+		return "redirect:/orders/";
 	}
 
 	/**

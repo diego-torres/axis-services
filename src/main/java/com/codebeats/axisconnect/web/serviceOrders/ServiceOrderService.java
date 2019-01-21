@@ -32,6 +32,10 @@ public class ServiceOrderService {
 		psoRepository.save(pso);
 	}
 
+	public void updatePartialServiceOrder(PartialServiceOrder pso) {
+		psoRepository.save(pso);
+	}
+
 	public PartialServiceOrder getPartialServiceOrderById(Integer id) {
 		return psoRepository.findById(id).orElse(null);
 	}

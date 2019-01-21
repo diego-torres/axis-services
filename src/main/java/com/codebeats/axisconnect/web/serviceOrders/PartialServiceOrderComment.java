@@ -4,6 +4,9 @@
 package com.codebeats.axisconnect.web.serviceOrders;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,6 +20,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author dtorresf
@@ -37,7 +43,40 @@ public class PartialServiceOrderComment implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "partial_service_order_id")
+	@JsonIgnore
 	private PartialServiceOrder partialServiceOrder;
+
+	@Transient
+	private String duration;
+
+	public String getDuration() {
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime commentDate = created.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+		Duration duration = Duration.between(commentDate, now);
+
+		long minutes = Math.abs(duration.toMinutes());
+		if (minutes < 5)
+			return "just now";
+		if (minutes < 60)
+			return minutes + " minutes ago";
+
+		long hours = Math.abs(duration.toHours());
+		if (hours < 24)
+			return hours + " hours ago";
+
+		long days = Math.abs(duration.toDays());
+		if (days < 90)
+			return days + " days ago";
+
+		long months = days / 30;
+		return months + " months ago";
+
+	}
+
+	public void setDuration(String duration) {
+		// empty implementation
+	}
 
 	public Integer getId() {
 		return id;

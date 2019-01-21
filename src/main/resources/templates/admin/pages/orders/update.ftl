@@ -53,6 +53,7 @@
 			<form name="serviceOrderForm" id="serviceOrderForm" action="/orders/create" method="POST" role="form">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<input type="hidden" name="startProcessInstance" id="startProcessInstance" value="false" />
+			<input type="hidden" name="id" id="id" value="${order.id}" />
 			<div class="row">
 				<div class="col-lg-12">
 					
@@ -208,7 +209,7 @@
                                 </button>
                                 <ul class="dropdown-menu slidedown">
                                     <li>
-                                        <a href="#">
+                                        <a href="#" onclick="getPartialComments(${order.id}, '${principal}'); return false;">
                                             <i class="fa fa-refresh fa-fw"></i> Refresh
                                         </a>
                                     </li>
@@ -220,12 +221,12 @@
                             <ul class="chat">
                             	<#list order.comments as comment>
                             	<#if comment.fromUser == principal>
-                            	<li class="right clearfix">
+                            	<li id="comment_${comment.id}" class="right clearfix">
                         		<span class="chat-img pull-left">
                                     <img src="http://placehold.it/50/FA6F57/fff?text=Me" alt="User Avatar" class="img-circle" />
                                 </span>
                         		<#else>
-                        		<li class="left clearfix">
+                        		<li id="comment_${comment.id}" class="left clearfix">
                         		<span class="chat-img pull-left">
                                     <img src="http://placehold.it/50/55C1E7/fff?text=S" alt="User Avatar" class="img-circle" />
                                 </span>
@@ -234,26 +235,7 @@
                                         <div class="header">
                                             <strong class="primary-font">${comment.fromUser}</strong>
                                             <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i>
-                                                <#assign cMinutes = (aDateTime?long - comment.created?long) / (1000 * 60 )?int>
-                                                <#if cMinutes < 5> 
-                                                	just now
-                                                <#elseif cMinutes < 60> 
-                                                	${cMinutes?floor} mins ago (${comment.created})
-                                                <#else>
-                                                	<#assign cHours = cMinutes / 60?int>
-                                                	<#if cHours < 24> 
-                                                		${cHours?floor} hours ago (${comment.created})
-                                                	<#else>
-                                                		<#assign cDays = cHours / 24?int>
-                                                		<#if cDays < 90>
-                                                			${cDays?floor} days ago (${comment.created})
-                                                		<#else>
-                                                			<#assign cMonths = cDays / 30?int>
-                                                			${cMonths?floor} months ago (${comment.created})
-                                                		</#if>
-                                                	</#if>
-                                                </#if>
+                                                <i class="fa fa-clock-o fa-fw"></i> ${comment.duration} (${comment.created})
                                             </small>
                                         </div>
                                         <p>
@@ -267,9 +249,9 @@
                         <!-- /.panel-body -->
                         <div class="panel-footer">
                             <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                <input id="textComment" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                                    <button class="btn btn-warning btn-sm" id="btn-chat" onclick="addComment(${order.id}, '${principal}'); return false;">
                                         Send
                                     </button>
                                 </span>
@@ -314,6 +296,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="../../dist/js/process-instance.js"></script>
+    <script src="../../dist/js/comments.js"></script>
 
 </body>
 

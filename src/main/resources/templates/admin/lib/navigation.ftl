@@ -247,7 +247,46 @@
                     <!-- /input-group -->
                 </li>
                 <li>
-                    <a href="/admin/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    <a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-keyboard-o fa-fw"></i> SOR</a>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/orders/create">Order Entry</a></li>
+                    </ul>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/orders/">Validate</a></li>
+                    </ul>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/orders/closed">Completed</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-question fa-fw"></i> RFT</a>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/request_for_tender/">Tracking</a></li>
+                    </ul>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/request_for_tender/closed">Completed</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-paper-plane fa-fw"></i> AQN</a>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/axis_quote/">Tracking</a></li>
+                    </ul>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/axis_quote/sold">Sold</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-handshake-o fa-fw"></i> ASC</a>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/axis_service/">Tracking</a></li>
+                    </ul>
+                    <ul class="nav nav-second-level">
+                      <li><a href="/axis_service/closed">Closed</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="/orders/"><i class="fa fa-table fa-fw"></i> Orders (Active)</a>
