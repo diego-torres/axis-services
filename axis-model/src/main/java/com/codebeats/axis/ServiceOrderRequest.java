@@ -1,7 +1,22 @@
 package com.codebeats.axis;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="service_order_request")
 public class ServiceOrderRequest implements Serializable {
-    private int id;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
     private String customer;
     private String customerRef;
     private String vendorRef;
@@ -16,6 +31,8 @@ public class ServiceOrderRequest implements Serializable {
     private String weightLbs;
     private String dimensions;
     private int classNumber;
+    @Transient
+    private boolean isValid;
 
 
     public int getId() {
@@ -138,28 +155,26 @@ public class ServiceOrderRequest implements Serializable {
         this.classNumber = classNumber;
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", customer='" + getCustomer() + "'" +
-            ", customerRef='" + getCustomerRef() + "'" +
-            ", vendorRef='" + getVendorRef() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", requested='" + getRequested() + "'" +
-            ", shipper='" + getShipper() + "'" +
-            ", consignee='" + getConsignee() + "'" +
-            ", carrier='" + getCarrier() + "'" +
-            ", service='" + getService() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", hu='" + getHu() + "'" +
-            ", weightLbs='" + getWeightLbs() + "'" +
-            ", dimensions='" + getDimensions() + "'" +
-            ", classNumber='" + getClassNumber() + "'" +
-            "}";
-    }
+    public boolean isValid() {
+		return isValid;
+	}
+
+	public void setValid(boolean isValid) {
+		this.isValid = isValid;
+	}
+
+	
 
     @Override
+	public String toString() {
+		return "ServiceOrderRequest [id=" + id + ", customer=" + customer + ", customerRef=" + customerRef
+				+ ", vendorRef=" + vendorRef + ", description=" + description + ", requested=" + requested
+				+ ", shipper=" + shipper + ", consignee=" + consignee + ", carrier=" + carrier + ", service=" + service
+				+ ", status=" + status + ", hu=" + hu + ", weightLbs=" + weightLbs + ", dimensions=" + dimensions
+				+ ", classNumber=" + classNumber + ", isValid=" + isValid + "]";
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (o == this)
             return true;
