@@ -12,8 +12,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "service_order_request")
-public class ServiceOrderRequest implements Serializable {
+@Table(name = "request_for_tender")
+public class RequestForTender implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +33,28 @@ public class ServiceOrderRequest implements Serializable {
 	private int weightLbs = 0;
 	private String dimensions;
 	private int classNumber;
-	private Boolean requiresCustomerApproval;
+	@Temporal(TemporalType.DATE)
+	private Date eta;
+	private String pro;
 
+	public RequestForTender(ServiceOrderRequest sor) {
+		this.customer = sor.getCustomer();
+		this.customerRef = sor.getCustomerRef();
+		this.vendorRef = sor.getVendorRef();
+		this.description = sor.getDescription();
+		this.requested = sor.getRequested();
+		this.shipper = sor.getShipper();
+		this.consignee = sor.getConsignee();
+		this.carrier = sor.getCarrier();
+		this.service = sor.getService();
+		this.hu = sor.getHu();
+		this.weightLbs = sor.getWeightLbs();
+		this.dimensions = sor.getDimensions();
+		this.classNumber = sor.getClassNumber();
+	}
+	
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Integer id) {
@@ -44,7 +62,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getCustomer() {
-		return this.customer;
+		return customer;
 	}
 
 	public void setCustomer(String customer) {
@@ -52,7 +70,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getCustomerRef() {
-		return this.customerRef;
+		return customerRef;
 	}
 
 	public void setCustomerRef(String customerRef) {
@@ -60,7 +78,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getVendorRef() {
-		return this.vendorRef;
+		return vendorRef;
 	}
 
 	public void setVendorRef(String vendorRef) {
@@ -68,7 +86,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {
@@ -76,7 +94,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public Date getRequested() {
-		return this.requested;
+		return requested;
 	}
 
 	public void setRequested(Date requested) {
@@ -84,7 +102,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getShipper() {
-		return this.shipper;
+		return shipper;
 	}
 
 	public void setShipper(String shipper) {
@@ -92,7 +110,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getConsignee() {
-		return this.consignee;
+		return consignee;
 	}
 
 	public void setConsignee(String consignee) {
@@ -100,7 +118,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getCarrier() {
-		return this.carrier;
+		return carrier;
 	}
 
 	public void setCarrier(String carrier) {
@@ -108,7 +126,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getService() {
-		return this.service;
+		return service;
 	}
 
 	public void setService(String service) {
@@ -116,7 +134,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(String status) {
@@ -124,7 +142,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getHu() {
-		return this.hu;
+		return hu;
 	}
 
 	public void setHu(String hu) {
@@ -132,7 +150,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public int getWeightLbs() {
-		return this.weightLbs;
+		return weightLbs;
 	}
 
 	public void setWeightLbs(int weightLbs) {
@@ -140,7 +158,7 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public String getDimensions() {
-		return this.dimensions;
+		return dimensions;
 	}
 
 	public void setDimensions(String dimensions) {
@@ -148,46 +166,60 @@ public class ServiceOrderRequest implements Serializable {
 	}
 
 	public int getClassNumber() {
-		return this.classNumber;
+		return classNumber;
 	}
 
 	public void setClassNumber(int classNumber) {
 		this.classNumber = classNumber;
 	}
 
-	public Boolean getRequiresCustomerApproval() {
-		return requiresCustomerApproval;
+	public Date getEta() {
+		return eta;
 	}
 
-	public void setRequiresCustomerApproval(Boolean requiresCustomerApproval) {
-		this.requiresCustomerApproval = requiresCustomerApproval;
+	public void setEta(Date eta) {
+		this.eta = eta;
 	}
 
-	
+	public String getPro() {
+		return pro;
+	}
+
+	public void setPro(String pro) {
+		this.pro = pro;
+	}
 
 	@Override
 	public String toString() {
-		return "ServiceOrderRequest [id=" + id + ", customer=" + customer + ", customerRef=" + customerRef
-				+ ", vendorRef=" + vendorRef + ", description=" + description + ", requested=" + requested
-				+ ", shipper=" + shipper + ", consignee=" + consignee + ", carrier=" + carrier + ", service=" + service
-				+ ", status=" + status + ", hu=" + hu + ", weightLbs=" + weightLbs + ", dimensions=" + dimensions
-				+ ", classNumber=" + classNumber + ", requiresCustomerApproval=" + requiresCustomerApproval + "]";
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (o == this)
-			return true;
-		if (!(o instanceof ServiceOrderRequest)) {
-			return false;
-		}
-		ServiceOrderRequest serviceOrderRequest = (ServiceOrderRequest) o;
-		return id == serviceOrderRequest.id;
+		return "RequestForTender [id=" + id + ", customer=" + customer + ", customerRef=" + customerRef + ", vendorRef="
+				+ vendorRef + ", description=" + description + ", requested=" + requested + ", shipper=" + shipper
+				+ ", consignee=" + consignee + ", carrier=" + carrier + ", service=" + service + ", status=" + status
+				+ ", hu=" + hu + ", weightLbs=" + weightLbs + ", dimensions=" + dimensions + ", classNumber="
+				+ classNumber + ", eta=" + eta + ", pro=" + pro + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return id;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RequestForTender other = (RequestForTender) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 
 }
