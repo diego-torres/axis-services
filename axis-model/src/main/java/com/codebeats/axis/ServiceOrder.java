@@ -2,9 +2,9 @@ package com.codebeats.axis;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -46,9 +46,30 @@ public class ServiceOrder implements Serializable {
 	private BigDecimal margin = new BigDecimal(0);
 	private BigDecimal price = new BigDecimal(0);
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "serviceOrder", cascade = CascadeType.ALL)
-	private Set<CarrierBooking> carrierBookings = new HashSet<CarrierBooking>();
+	private List<CarrierBooking> carrierBookings = new ArrayList<CarrierBooking>();
 	private Boolean completed;
 	private Boolean paid;
+
+	public ServiceOrder(AxisQuote aqn) {
+		this.customer = aqn.getCustomer();
+		this.customerRef = aqn.getCustomerRef();
+		this.vendorRef = aqn.getVendorRef();
+		this.description = aqn.getDescription();
+		this.requested = aqn.getRequested();
+		this.shipper = aqn.getShipper();
+		this.consignee = aqn.getConsignee();
+		this.carrier = aqn.getCarrier();
+		this.service = aqn.getService();
+		this.hu = aqn.getHu();
+		this.weightLbs = aqn.getWeightLbs();
+		this.dimensions = aqn.getDimensions();
+		this.classNumber = aqn.getClassNumber();
+		this.eta = aqn.getEta();
+		this.pro = aqn.getPro();
+		this.cost = aqn.getCost();
+		this.margin = aqn.getMargin();
+		this.price = aqn.getPrice();
+	}
 
 	public Integer getId() {
 		return id;
@@ -210,19 +231,26 @@ public class ServiceOrder implements Serializable {
 		this.price = price;
 	}
 
-	public Set<CarrierBooking> getCarrierBookings() {
+	public List<CarrierBooking> getCarrierBookings() {
 		return carrierBookings;
 	}
 
-	public void setCarrierBookings(Set<CarrierBooking> carrierBookings) {
-		this.carrierBookings = carrierBookings;
+	public void setCarrierBookings(List<CarrierBooking> carrierBookings) {
+		for (CarrierBooking cb : carrierBookings) {
+			if (!this.carrierBookings.contains(cb))
+				addCarrierBooking(cb);
+		}
+		for (CarrierBooking cb : this.getCarrierBookings()) {
+			if (!carrierBookings.contains(cb))
+				removeCarrierBooking(cb);
+		}
 	}
-	
+
 	public void addCarrierBooking(CarrierBooking booking) {
 		this.carrierBookings.add(booking);
 		booking.setServiceOrder(this);
 	}
-	
+
 	public void removeCarrierBooking(CarrierBooking booking) {
 		this.carrierBookings.remove(booking);
 		booking.setServiceOrder(null);

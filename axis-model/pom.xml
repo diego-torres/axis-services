@@ -5,7 +5,7 @@
 	<groupId>com.codebeats.axis</groupId>
 	<artifactId>axis-model</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>axis-model</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>

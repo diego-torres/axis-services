@@ -120,7 +120,8 @@ public class CarrierQuote implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((carrier == null) ? 0 : carrier.hashCode());
+		result = prime * result + ((reference == null) ? 0 : reference.hashCode());
 		return result;
 	}
 
@@ -133,9 +134,19 @@ public class CarrierQuote implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		CarrierQuote other = (CarrierQuote) obj;
-		if (id != other.id)
+		if (carrier == null) {
+			if (other.carrier != null)
+				return false;
+		} else if (!carrier.equals(other.carrier))
+			return false;
+		if (reference == null) {
+			if (other.reference != null)
+				return false;
+		} else if (!reference.equals(other.reference))
 			return false;
 		return true;
 	}
+
+	
 
 }

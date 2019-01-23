@@ -2,9 +2,9 @@ package com.codebeats.axis;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -46,8 +46,26 @@ public class AxisQuote implements Serializable {
 	private BigDecimal margin = new BigDecimal(0);
 	private BigDecimal price = new BigDecimal(0);
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "axisQuote", cascade = CascadeType.ALL)
-	private Set<CarrierQuote> carrierQuotes = new HashSet<CarrierQuote>();
+	private List<CarrierQuote> carrierQuotes = new ArrayList<CarrierQuote>();
 	private Boolean approved;
+
+	public AxisQuote(RequestForTender rft) {
+		this.customer = rft.getCustomer();
+		this.customerRef = rft.getCustomerRef();
+		this.vendorRef = rft.getVendorRef();
+		this.description = rft.getDescription();
+		this.requested = rft.getRequested();
+		this.shipper = rft.getShipper();
+		this.consignee = rft.getConsignee();
+		this.carrier = rft.getCarrier();
+		this.service = rft.getService();
+		this.hu = rft.getHu();
+		this.weightLbs = rft.getWeightLbs();
+		this.dimensions = rft.getDimensions();
+		this.classNumber = rft.getClassNumber();
+		this.eta = rft.getEta();
+		this.pro = rft.getPro();
+	}
 
 	public Integer getId() {
 		return id;
@@ -209,19 +227,28 @@ public class AxisQuote implements Serializable {
 		this.price = price;
 	}
 
-	public Set<CarrierQuote> getCarrierQuotes() {
+	public List<CarrierQuote> getCarrierQuotes() {
 		return carrierQuotes;
 	}
 
-	public void setCarrierQuotes(Set<CarrierQuote> carrierQuotes) {
-		this.carrierQuotes = carrierQuotes;
+	public void setCarrierQuotes(List<CarrierQuote> carrierQuotes) {
+		for (CarrierQuote cq : carrierQuotes) {
+			if (!this.carrierQuotes.contains(cq))
+				addCarrierQuote(cq);
+		}
+
+		for (CarrierQuote cq : this.carrierQuotes) {
+			if (!carrierQuotes.contains(cq))
+				removeCarrierQuote(cq);
+		}
+
 	}
-	
+
 	public void addCarrierQuote(CarrierQuote carrierQuote) {
 		this.carrierQuotes.add(carrierQuote);
 		carrierQuote.setAxisQuote(this);
 	}
-	
+
 	public void removeCarrierQuote(CarrierQuote carrierQuote) {
 		this.carrierQuotes.remove(carrierQuote);
 		carrierQuote.setAxisQuote(null);

@@ -1,12 +1,17 @@
 package com.codebeats.axis;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +41,8 @@ public class RequestForTender implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date eta;
 	private String pro;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "requestForTender", cascade = CascadeType.ALL)
+	private List<CarrierSelection> carrierSelection = new ArrayList<CarrierSelection>();
 
 	public RequestForTender(ServiceOrderRequest sor) {
 		this.customer = sor.getCustomer();
@@ -52,7 +59,7 @@ public class RequestForTender implements Serializable {
 		this.dimensions = sor.getDimensions();
 		this.classNumber = sor.getClassNumber();
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -189,13 +196,31 @@ public class RequestForTender implements Serializable {
 		this.pro = pro;
 	}
 
+	public List<CarrierSelection> getCarrierSelection() {
+		return carrierSelection;
+	}
+
+	public void setCarrierSelection(List<CarrierSelection> carrierSelection) {
+		this.carrierSelection = carrierSelection;
+	}
+
+	public void addCarrier(CarrierSelection carrier) {
+		carrierSelection.add(carrier);
+		carrier.setRequestForTender(this);
+	}
+
+	public void removeCarrier(CarrierSelection carrier) {
+		carrierSelection.remove(carrier);
+		carrier.setRequestForTender(null);
+	}
+
 	@Override
 	public String toString() {
 		return "RequestForTender [id=" + id + ", customer=" + customer + ", customerRef=" + customerRef + ", vendorRef="
 				+ vendorRef + ", description=" + description + ", requested=" + requested + ", shipper=" + shipper
 				+ ", consignee=" + consignee + ", carrier=" + carrier + ", service=" + service + ", status=" + status
 				+ ", hu=" + hu + ", weightLbs=" + weightLbs + ", dimensions=" + dimensions + ", classNumber="
-				+ classNumber + ", eta=" + eta + ", pro=" + pro + "]";
+				+ classNumber + ", eta=" + eta + ", pro=" + pro + ", carrierSelection=" + carrierSelection + "]";
 	}
 
 	@Override
@@ -219,7 +244,5 @@ public class RequestForTender implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

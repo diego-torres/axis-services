@@ -14,19 +14,18 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "carrier_booking")
-public class CarrierBooking implements Serializable {
+@Table(name = "carrier_selection")
+public class CarrierSelection implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String bookingNumbers;
 	private String carrier;
-	private String bolUrl;
+	private String reason;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "service_order_id")
+	@JoinColumn(name = "request_for_tender_id")
 	@JsonIgnore
-	private ServiceOrder serviceOrder;
+	private RequestForTender requestForTender;
 
 	public Integer getId() {
 		return id;
@@ -34,14 +33,6 @@ public class CarrierBooking implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getBookingNumbers() {
-		return bookingNumbers;
-	}
-
-	public void setBookingNumbers(String bookingNumbers) {
-		this.bookingNumbers = bookingNumbers;
 	}
 
 	public String getCarrier() {
@@ -52,32 +43,31 @@ public class CarrierBooking implements Serializable {
 		this.carrier = carrier;
 	}
 
-	public String getBolUrl() {
-		return bolUrl;
+	public String getReason() {
+		return reason;
 	}
 
-	public void setBolUrl(String bolUrl) {
-		this.bolUrl = bolUrl;
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 
-	public ServiceOrder getServiceOrder() {
-		return serviceOrder;
+	public RequestForTender getRequestForTender() {
+		return requestForTender;
 	}
 
-	public void setServiceOrder(ServiceOrder serviceOrder) {
-		this.serviceOrder = serviceOrder;
+	public void setRequestForTender(RequestForTender requestForTender) {
+		this.requestForTender = requestForTender;
 	}
 
 	@Override
 	public String toString() {
-		return "CarrierBooking [id=" + id + ", bookingNumbers=" + bookingNumbers + ", carrier=" + carrier + "]";
+		return "CarrierSelection [id=" + id + ", carrier=" + carrier + ", reason=" + reason + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((bookingNumbers == null) ? 0 : bookingNumbers.hashCode());
 		result = prime * result + ((carrier == null) ? 0 : carrier.hashCode());
 		return result;
 	}
@@ -90,12 +80,7 @@ public class CarrierBooking implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CarrierBooking other = (CarrierBooking) obj;
-		if (bookingNumbers == null) {
-			if (other.bookingNumbers != null)
-				return false;
-		} else if (!bookingNumbers.equals(other.bookingNumbers))
-			return false;
+		CarrierSelection other = (CarrierSelection) obj;
 		if (carrier == null) {
 			if (other.carrier != null)
 				return false;
