@@ -60,11 +60,11 @@
 			<version>3.3.7</version>
 		</dependency>
 
-		<dependency>
+		<!--  <dependency>
 			<groupId>com.codebeats.axis</groupId>
 			<artifactId>axis-model</artifactId>
-			<version>1.0.0</version>
-		</dependency>
+			<version>1.2.0</version>
+		</dependency>  -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -75,8 +75,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-
+		</dependency>		
 	</dependencies>
 
 	<build>

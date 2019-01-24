@@ -50,7 +50,7 @@ public class PartialServiceOrder {
 	@Transient
 	private boolean startProcessInstance = false;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "partialServiceOrder", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "partialServiceOrder", cascade = CascadeType.ALL)
 	private List<PartialServiceOrderComment> comments = new ArrayList<>();
 
 	public Integer getId() {

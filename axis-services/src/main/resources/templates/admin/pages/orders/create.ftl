@@ -1,330 +1,306 @@
 <#import "/spring.ftl" as spring />
-<#import "../../lib/navigation.ftl" as navigation />
-<#assign xhtmlCompliant=true in spring />
+<#import "../../lib/head.ftl" as head />
+<#import "../../lib/preloader.ftl" as preloader />
+<#import "../../lib/topbar.ftl" as topbar />
+<#import "../../lib/leftbar.ftl" as leftbar />
+<#import "../../lib/rightbar.ftl" as rightbar />
+<#import "../../lib/footer.ftl" as footer />
+<#import "../../lib/jquery_scripts.ftl" as jscripts />
+<#assign xhtmlCompliant = true in spring />
 <#assign aDateTime = .now>
 <#assign aDate = aDateTime?date>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>Axis Connect US - Create Service Order</title>
-
-<!-- Bootstrap Core CSS -->
-<link href="../vendor/bootstrap_3_3_7/css/bootstrap.min.css"
-	rel="stylesheet">
-
-<!-- MetisMenu CSS -->
-<link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-
-<!-- Custom Fonts -->
-<link href="../vendor/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <@head.nav pageTitle="Axis BPS - Order Entry" />
+    <!-- page CSS -->
+    <link href="/css/orders/create.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/node_modules/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/node_modules/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/node_modules/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <!--Toaster Popup message CSS -->
+	<link href="/assets/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
 </head>
 
-<body>
-	<div id="wrapper">
-
-		<@navigation.nav />
-
-		<div id="page-wrapper">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header">New Service Order</h1>
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
-			<!-- /.row -->
-			<form name="serviceOrderForm" id="serviceOrderForm" action="/orders/create" method="POST" role="form">
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-			<input type="hidden" name="startProcessInstance" id="startProcessInstance" value="false" />
-			<div class="row">
-				<div class="col-lg-12">
-					
-						<div class="form-group">
-							<label>Customer Reference (PO)</label> <input
-								class="form-control" id="customerRef" name="customerRef"
-								type="text" placeholder="Customer Ref"></input>
-						</div>
-						<div class="form-group">
-							<label>Vendor Reference (SO)</label> <input class="form-control"
-								id="vendorRef" name="vendorRef" type="text"
-								placeholder="Vendor Ref"></input>
-						</div>
-						<div class="form-group">
-							<label>Requested Delivery Date</label> <input class="form-control"
-								id="deliveryDate" name="deliveryDate" type="date"
-								min="${aDate?iso_utc}"></input>
-						</div>
-						<div class="form-group">
-							<button id="btnSubmit" name="btnSubmit" type="submit"
-								class="btn btn-primary">Save</button>
-							<button onclick="startProcess();" id="btnReset" name="btnReset" type="button"
-								class="btn btn-success">Start Process</button>
-						</div>
-				</div>
-			</div>
-			<div class="row">
-			<div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Service Order Details
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#materials" data-toggle="tab">Materials</a>
-                                </li>
-                                <li><a href="#origin" data-toggle="tab">Origin</a>
-                                </li>
-                                <li><a href="#destination" data-toggle="tab">Destination</a>
-                                </li>
-                                <li><a href="#comments" data-toggle="tab">Comments</a>
-                                </li>
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane fade in active" id="materials">
-                                	<div class="col-lg-12">
-                                		<div class="form-group">
-											<label>Weight</label> <input
-												class="form-control" id="weight" name="weight"
-												type="text" placeholder="weight"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group">
-											<label>Dimensions</label> <input
-												class="form-control" id="dimensions" name="dimensions"
-												type="text" placeholder="dimensions"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group">
-											<label>Instructions</label> <input
-												class="form-control" id="instructions" name="instructions"
-												type="text" placeholder="instructions"></input>
-										</div><!-- /.form-group -->
-                                	</div><!-- /.col-lg-12 -->
-                                </div>
-                                <div class="tab-pane fade" id="origin">
-                                    <div class="col-lg-12">
-                                		<div class="form-group">
-											<label>Street Address Line 1</label> <input
-												class="form-control" id="fromStreet" name="fromStreet"
-												type="text" placeholder="Street Address Line 1"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group">
-											<label>Street Address Line 2</label> <input
-												class="form-control" id="fromStreet2" name="fromStreet2"
-												type="text" placeholder="Street Address Line 2"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group">
-											<label>City</label> <input
-												class="form-control" id="fromCity" name="fromCity"
-												type="text" placeholder="City"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group col-md-4">
-											<input
-												class="form-control" id="fromState" name="fromState"
-												type="text" placeholder="state"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group col-md-4">
-											<input
-												class="form-control" id="fromZip" name="fromZip"
-												type="text" placeholder="zip"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group col-md-4">
-											<input
-												class="form-control" id="fromCountry" name="fromCountry"
-												type="text" placeholder="country"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group">
-											<label>Map Location Ref</label> <input
-												class="form-control" id="fromLocation" name="fromLocation"
-												type="text" placeholder="Map Location Reference"></input>
-										</div><!-- /.form-group -->
-                                	</div><!-- /.col-lg-12 -->
-                                </div>
-                                <div class="tab-pane fade" id="destination">
-                                    <div class="col-lg-12">
-                                		<div class="form-group">
-											<label>Street Address Line 1</label> <input
-												class="form-control" id="toStreet" name="toStreet"
-												type="text" placeholder="Street Address Line 1"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group">
-											<label>Street Address Line 2</label> <input
-												class="form-control" id="toStreet2" name="toStreet2"
-												type="text" placeholder="Street Address Line 2"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group">
-											<label>City</label> <input
-												class="form-control" id="toCity" name="toCity"
-												type="text" placeholder="City"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group col-md-4">
-											<input
-												class="form-control" id="toState" name="toState"
-												type="text" placeholder="state"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group col-md-4">
-											<input
-												class="form-control" id="toZip" name="toZip"
-												type="text" placeholder="zip"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group col-md-4">
-											<input
-												class="form-control" id="toCountry" name="toCountry"
-												type="text" placeholder="country"></input>
-										</div><!-- /.form-group -->
-										<div class="form-group">
-											<label>Map Location Ref</label> <input
-												class="form-control" id="toLocation" name="toLocation"
-												type="text" placeholder="Map Location Reference"></input>
-										</div><!-- /.form-group -->
-                                	</div><!-- /.col-lg-12 -->
-                                </div>
-                                <div class="tab-pane fade" id="comments">
-                                    <div class="chat-panel panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-comments fa-fw"></i> Comments
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-chevron-down"></i>
-                                </button>
-                                <ul class="dropdown-menu slidedown">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-refresh fa-fw"></i> Refresh
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="chat">
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
-                                            </small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
+<body class="skin-blue fixed-layout">
+    <@preloader.nav />
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <@topbar.nav />
+        <@leftbar.nav />
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="text-themecolor">Create SOR (Service Order Request)</h4>
                     </div>
-                    <!-- /.panel .chat-panel -->
-                                </div>
-                            </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">Orders</a></li>
+                                <li class="breadcrumb-item active">Create</li>
+                            </ol>
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
-			</div>
-			</form>
-		</div>
-		<!-- /#page-wrapper -->
-
-	</div>
-	<!-- /#wrapper -->
-
-	<!-- jQuery -->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="../vendor/bootstrap_3_3_7/js/bootstrap.min.js"></script>
-
-	<!-- Metis Menu Plugin JavaScript -->
-	<script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-	<!-- Custom Theme JavaScript -->
-	<script src="../dist/js/sb-admin-2.js"></script>
-	<script src="../dist/js/process-instance.js"></script>
-
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- row -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                        	<div class="card-header bg-info">
+                                <h4 class="mb-0 text-white">Service Order Request - New</h4>
+                            </div>
+                            <div class="card-body">
+                            	<form name="serviceOrderForm" id="serviceOrderForm" action="/orders/create" method="POST" class="mt-4">
+                            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            		<div class="form-body">
+                            			<h3 class="card-title">Service Entities</h3>
+                                        <hr>
+                                        <div class="row p-t-20">
+	                            			<div class="col-md-12 ">
+	                            				<div class="form-group">
+			                                        <label for="customer">Customer</label>
+			                                        <input required type="text" class="form-control" id="customer" aria-describedby="customerHelp" placeholder="Enter customer name" />
+			                                        <small id="customerHelp" class="form-text text-muted">Use customer name or code by catalog.</small>
+			                                    </div>
+			                                    <!-- /form-group (customer) -->
+											</div>
+											<!-- /column (customer) -->
+										</div>
+										<!-- /row (customer) -->
+										<div class="row">
+	                            			<div class="col-md-12 ">
+	                            				<div class="form-group">
+			                                        <label for="shipper">Shipper</label>
+			                                        <input type="text" class="form-control" id="shipper" aria-describedby="shipperHelp" placeholder="Enter shipper name" />
+			                                        <small id="shipperHelp" class="form-text text-muted">Use shipper company name or code by catalog.</small>
+			                                    </div>
+			                                    <!-- /form-group (shipper) -->
+											</div>
+											<!-- /column (shipper) -->
+										</div>
+										<!-- /row (shipper) -->
+										<div class="row">
+                            				<div class="col-md-12 ">
+                            					<div class="form-group">
+		                                        	<label for="consignee">Consignee</label>
+		                                        	<input type="text" class="form-control" id="consignee" aria-describedby="consigneeHelp" placeholder="Enter consignee name" />
+		                                        	<small id="consigneeHelp" class="form-text text-muted">Use consignee company name or code by catalog.</small>
+		                                    	</div>
+		                                    	<!-- /form-group (consignee) -->
+											</div>
+											<!-- /column (consignee) -->
+										</div>
+										<!-- /row (consignee) -->
+										<div class="row">
+                            				<div class="col-md-12 ">
+                            					<div class="form-group">
+		                                        	<label for="carrier">Carrier</label>
+		                                        	<input type="text" class="form-control" id="carrier" aria-describedby="carrierHelp" placeholder="Enter carrier name" />
+		                                        	<small id="carrierHelp" class="form-text text-muted">Use carrier company name or code by catalog.</small>
+		                                    	</div>
+		                                    	<!-- /form-group (carrier) -->
+											</div>
+											<!-- /column (carrier) -->
+										</div>
+										<!-- /row (carrier) -->
+										<h3 class="box-title m-t-40">Reference Numbers</h3>
+                                        <hr>
+                                        <div class="row">
+                                        	<div class="col-md-6 ">
+                                        		<div class="form-group">
+			                                        <label for="customerRef">Customer Ref</label>
+			                                        <input type="text" class="form-control" id="customerRef" aria-describedby="customerRefHelp" placeholder="Enter customer reference" />
+			                                        <small id="customerRefHelp" class="form-text text-muted">Use purchase order number or other customer reference to this requirement.</small>
+			                                    </div>
+			                                    <!-- /form-group (customer ref) -->
+                                        	</div>
+                                        	<!-- /column (customer ref) -->
+                                        	<div class="col-md-6 ">
+                                        		<div class="form-group">
+			                                        <label for="vendorRef">Vendor Ref</label>
+			                                        <input type="text" class="form-control" id="vendorRef" aria-describedby="vendorRefHelp" placeholder="Enter vendor reference" />
+			                                        <small id="vendorRefHelp" class="form-text text-muted">Use sales order number or other vendor reference to this requirement.</small>
+			                                    </div>
+			                                    <!-- /form-group (vendor ref) -->
+                                        	</div>
+                                        	<!-- /column (vendor ref) -->
+                                        </div>
+                                        <!-- /row (customer and vendor reference) -->
+                                        <h3 class="box-title m-t-40">Service Details</h3>
+                                        <hr>
+                                        <div class="row">
+                                        	<div class="col-md-12">
+                            					<div class="form-group">
+			                                        <label for="description">Description</label>
+			                                        <input required type="text" class="form-control" id="description" aria-describedby="descriptionHelp" placeholder="Enter service order description" />
+			                                        <small id="descriptionHelp" class="form-text text-muted">Service order description.</small>
+			                                    </div>
+		                                    	<!-- /form-group (description) -->
+											</div>
+											<!-- /column (description) -->
+                                        </div>
+                                        <!-- /row (service order request - description) -->
+                                        <div class="row">
+                                        	<div class="col-md-4">
+                                        		<div class="form-group">
+			                                        <label for="requestedDate">Requested Date</label>
+			                                        <input type="date" class="form-control" id="requestedDate" aria-describedby="requestedDateHelp" />
+			                                        <small id="requestedDateHelp" class="form-text text-muted">Date when the requested service should be delivered.</small>
+			                                    </div>
+			                                    <!-- /form-group (requestedDate) -->
+                                        	</div>
+                                        	<!-- /column (requestedDate) -->
+                                        	<div class="col-md-5">
+                                        		<div class="form-group" id="serviceFg">
+                                        			<label>Service</label>
+                                                    <select class="select2 form-control custom-select" style="width:95%; height:36px;" aria-describedby="serviceHelp" id="service">
+                                                        <option>--Select requested service--</option>
+                                                        <optgroup label="LAND FREIGHT">
+                                                        	<option>PKG GROUND</option>
+                                                        	<option>PKG 3RD DAY</option>
+                                                        	<option>PKG 2ND DAY</option>
+                                                        	<option>PKG NEXT DAY</option>
+                                                        	<option>LTL REGULAR</option>
+                                                        	<option>LTL GUARANTEED</option>
+                                                        	<option>FTL REGULAR</option>
+                                                        	<option>FTL TEAM</option>
+                                                        	<option>STR REGULAR</option>
+                                                        	<option>STR TEAM</option>
+                                                        </optgroup>
+                                                        <optgroup label="AIR FREIGHT">
+                                                        	<option>ECN</option>
+                                                        	<option>EXP</option>
+                                                        	<option>CHT</option>
+                                                        </optgroup>
+                                                        <optgroup label="OCEAN FREIGHT">
+                                                        	<option>LCL</option>
+                                                        	<option>FCL 20FT</option>
+                                                        	<option>FCL 40FT</option>
+                                                        	<option>FCL 45FT</option>
+                                                        </optgroup>
+                                                        <optgroup label="OTHER SERVICES">
+                                                        	<option>CUSTOMS BROKERAGE</option>
+                                                        	<option>BORDER CROSSING</option>
+                                                        	<option>BUSINESS MANAGEMENT</option>
+                                                        	<option>NOT SURE</option>
+                                                        </optgroup>
+                                                    </select>			                                        
+			                                        <small id="serviceHelp" class="form-text text-muted">Requested service type, please select one.</small>
+			                                    </div>
+			                                    <!-- /form-group (service) -->
+                                        	</div>
+                                        	<!-- /column (service) -->
+                                        	<div class="col-md-3">
+                            					<div class="form-group">
+			                                        <label for="classNumber">Class</label>
+			                                        <input type="number" class="form-control" id="classNumber" aria-describedby="classNumberHelp" placeholder="Class" />
+			                                        <small id="classNumberHelp" class="form-text text-muted">Service Class.</small>
+			                                    </div>
+		                                    	<!-- /form-group (class) -->
+											</div>
+											<!-- /column (class) -->
+                                        </div>
+                                        <!-- /row (date, service type and class) -->
+                                        <div class="row">
+                                        	<div class="col-md-4">
+                                        		<div class="form-group">
+                                        			<label for="hu">H.U.</label>
+                                        			<input type="number" class="form-control" id="hu" aria-description="huHelp" />
+                                        			<small id="huHelp" class="form-text text-muted">H.U. Number</small>
+                                        		</div>
+                                        		<!-- /form-group (H.U.) -->
+                                        	</div>
+                                        	<!-- /column (H.U.) -->
+                                        	<div class="col-md-4">
+                                        		<div class="form-group">
+                                        			<label for="weight">WT (Lbs)</label>
+                                        			<input type="number" class="form-control" id="weight" aria-description="weightHelp" />
+                                        			<small id="weightHelp" class="form-text text-muted">Weight (Pounds)</small>
+                                        		</div>
+                                        		<!-- /form-group (Weight) -->
+                                        	</div>
+                                        	<!-- /column (Weight) -->
+                                        	<div class="col-md-4">
+                                        		<div class="form-group">
+                                        			<label for="dimensions">LxWxH</label>
+                                        			<input type="text" class="form-control" id="dimensions" aria-description="dimensionsHelp" />
+                                        			<small id="dimensionsHelp" class="form-text text-muted">LxWxH</small>
+                                        		</div>
+                                        		<!-- /form-group (Dimensions) -->
+                                        	</div>
+                                        	<!-- /column (Dimensions) -->
+                                        </div><!-- /row (H.U., Weight and Dimensions) -->
+                                        <div class="row">
+                                        	<div class="col-md-12">
+                            					<div class="custom-control custom-checkbox mr-sm-2 mb-3">
+                            						<input type="checkbox" class="custom-control-input" id="requiresCustomerApproval" value="check" />
+			                                        <label class="custom-control-label" for="requiresCustomerApproval">The quote requires customer approval</label>
+			                                    </div>
+		                                    	<!-- /custom-control (requiresCustomerApproval) -->
+											</div>
+											<!-- /column (requiresCustomerApproval) -->
+                                        </div>
+                                        <!-- /row (service order request - customer approval) -->
+                            		</div>
+                            		<!-- /form-body -->
+                            		<div class="form-actions">
+		                                <button type="button" id="btnSubmit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+		                                <button type="button" id="btnCancel" class="btn btn-inverse">Cancel</button>
+		                            </div>
+		                            <!-- /form-actions -->
+                            	</form>
+                            </div>
+                            <!-- /card-body -->
+                        </div>
+                        <!-- /card -->
+                    </div>
+                    <!-- /column-12 -->
+                </div>
+                <!-- row -->
+                
+                <@rightbar.nav />
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+        <@footer.nav />
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+   <@jscripts.nav />
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <script src="../assets/node_modules/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="../assets/node_modules/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+	<script src="/js/orders/create.js" type="text/javascript"></script>
+	<!-- Popup message jquery -->
+    <script src="/assets/node_modules/toast-master/js/jquery.toast.js"></script>
 </body>
 
 </html>
