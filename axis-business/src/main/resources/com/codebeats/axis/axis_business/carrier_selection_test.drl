@@ -1,0 +1,11 @@
+package com.codebeats.axis.axis_business;
+
+import com.codebeats.axis.RequestForTender;
+
+rule carrier_selection_test
+    ruleflow-group "carrier_selection"
+    when
+        $rft: RequestForTender( )
+    then
+        System.out.println("Found request for tender object" + $rft);
+end

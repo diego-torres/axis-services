@@ -1,0 +1,13 @@
+package com.codebeats.axis.axis_business;
+
+import com.codebeats.axis.ServiceOrderRequest;
+import com.codebeats.axis.Validation;
+
+rule validation_test
+    ruleflow-group "sor_validation"
+    when
+        $so: ServiceOrderRequest( )
+        $val: Validation( )
+    then
+        System.out.println("Found service order and validation objects" + $so + $val);
+end
