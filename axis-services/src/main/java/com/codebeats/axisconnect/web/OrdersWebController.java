@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.codebeats.axis.ServiceOrderRequest;
 import com.codebeats.axisconnect.web.serviceOrders.PartialServiceOrder;
 import com.codebeats.axisconnect.web.serviceOrders.PartialServiceOrderComment;
 import com.codebeats.axisconnect.web.serviceOrders.ServiceOrderService;
@@ -90,6 +92,7 @@ public class OrdersWebController {
 	public String createOrder(Authentication auth, Model model) {
 		Principal principal = (Principal) auth.getPrincipal();
 		model.addAttribute("principal", principal.getName());
+		model.addAttribute("sor", new ServiceOrderRequest());
 		return "admin/pages/orders/create";
 	}
 
@@ -100,10 +103,11 @@ public class OrdersWebController {
 	 * @return
 	 */
 	@PostMapping("/create")
-	public String createServiceOrder(Authentication auth, PartialServiceOrder pso) {
-		if (!pso.isStartProcessInstance()) {
+	public String createServiceOrder(@ModelAttribute("serviceOrderForm") ServiceOrderRequest sor) {
+		/*if (!pso.isStartProcessInstance()) {
 			orderService.addPartialServiceOrder(pso, auth.getPrincipal().toString());
-		}
+		}*/
+		System.out.println(sor);
 		return "redirect:/orders/";
 	}
 

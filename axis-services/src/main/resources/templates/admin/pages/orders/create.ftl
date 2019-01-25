@@ -71,7 +71,7 @@
                             </div>
                             <div class="card-body">
                             	<form name="serviceOrderForm" id="serviceOrderForm" action="/orders/create" method="POST" class="mt-4">
-                            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             		<div class="form-body">
                             			<h3 class="card-title">Service Entities</h3>
                                         <hr>
@@ -79,7 +79,7 @@
 	                            			<div class="col-md-12 ">
 	                            				<div class="form-group">
 			                                        <label for="customer">Customer</label>
-			                                        <input required type="text" class="form-control" id="customer" aria-describedby="customerHelp" placeholder="Enter customer name" />
+			                                        <input name="customer" required type="text" class="form-control" id="customer" aria-describedby="customerHelp" placeholder="Enter customer name" />
 			                                        <small id="customerHelp" class="form-text text-muted">Use customer name or code by catalog.</small>
 			                                    </div>
 			                                    <!-- /form-group (customer) -->
@@ -91,7 +91,7 @@
 	                            			<div class="col-md-12 ">
 	                            				<div class="form-group">
 			                                        <label for="shipper">Shipper</label>
-			                                        <input type="text" class="form-control" id="shipper" aria-describedby="shipperHelp" placeholder="Enter shipper name" />
+			                                        <input name="shipper" type="text" class="form-control" id="shipper" aria-describedby="shipperHelp" placeholder="Enter shipper name" />
 			                                        <small id="shipperHelp" class="form-text text-muted">Use shipper company name or code by catalog.</small>
 			                                    </div>
 			                                    <!-- /form-group (shipper) -->
@@ -103,7 +103,7 @@
                             				<div class="col-md-12 ">
                             					<div class="form-group">
 		                                        	<label for="consignee">Consignee</label>
-		                                        	<input type="text" class="form-control" id="consignee" aria-describedby="consigneeHelp" placeholder="Enter consignee name" />
+		                                        	<input name="consignee" type="text" class="form-control" id="consignee" aria-describedby="consigneeHelp" placeholder="Enter consignee name" />
 		                                        	<small id="consigneeHelp" class="form-text text-muted">Use consignee company name or code by catalog.</small>
 		                                    	</div>
 		                                    	<!-- /form-group (consignee) -->
@@ -115,7 +115,7 @@
                             				<div class="col-md-12 ">
                             					<div class="form-group">
 		                                        	<label for="carrier">Carrier</label>
-		                                        	<input type="text" class="form-control" id="carrier" aria-describedby="carrierHelp" placeholder="Enter carrier name" />
+		                                        	<input name="carrier" type="text" class="form-control" id="carrier" aria-describedby="carrierHelp" placeholder="Enter carrier name" />
 		                                        	<small id="carrierHelp" class="form-text text-muted">Use carrier company name or code by catalog.</small>
 		                                    	</div>
 		                                    	<!-- /form-group (carrier) -->
@@ -129,7 +129,7 @@
                                         	<div class="col-md-6 ">
                                         		<div class="form-group">
 			                                        <label for="customerRef">Customer Ref</label>
-			                                        <input type="text" class="form-control" id="customerRef" aria-describedby="customerRefHelp" placeholder="Enter customer reference" />
+			                                        <input name="customerRef" type="text" class="form-control" id="customerRef" aria-describedby="customerRefHelp" placeholder="Enter customer reference" />
 			                                        <small id="customerRefHelp" class="form-text text-muted">Use purchase order number or other customer reference to this requirement.</small>
 			                                    </div>
 			                                    <!-- /form-group (customer ref) -->
@@ -138,7 +138,7 @@
                                         	<div class="col-md-6 ">
                                         		<div class="form-group">
 			                                        <label for="vendorRef">Vendor Ref</label>
-			                                        <input type="text" class="form-control" id="vendorRef" aria-describedby="vendorRefHelp" placeholder="Enter vendor reference" />
+			                                        <input name="vendorRef" type="text" class="form-control" id="vendorRef" aria-describedby="vendorRefHelp" placeholder="Enter vendor reference" />
 			                                        <small id="vendorRefHelp" class="form-text text-muted">Use sales order number or other vendor reference to this requirement.</small>
 			                                    </div>
 			                                    <!-- /form-group (vendor ref) -->
@@ -152,7 +152,7 @@
                                         	<div class="col-md-12">
                             					<div class="form-group">
 			                                        <label for="description">Description</label>
-			                                        <input required type="text" class="form-control" id="description" aria-describedby="descriptionHelp" placeholder="Enter service order description" />
+			                                        <input name="description" required type="text" class="form-control" id="description" aria-describedby="descriptionHelp" placeholder="Enter service order description" />
 			                                        <small id="descriptionHelp" class="form-text text-muted">Service order description.</small>
 			                                    </div>
 		                                    	<!-- /form-group (description) -->
@@ -164,7 +164,7 @@
                                         	<div class="col-md-4">
                                         		<div class="form-group">
 			                                        <label for="requestedDate">Requested Date</label>
-			                                        <input type="date" class="form-control" id="requestedDate" aria-describedby="requestedDateHelp" />
+			                                        <input name="requestedDate" type="date" class="form-control" id="requestedDate" aria-describedby="requestedDateHelp" />
 			                                        <small id="requestedDateHelp" class="form-text text-muted">Date when the requested service should be delivered.</small>
 			                                    </div>
 			                                    <!-- /form-group (requestedDate) -->
@@ -173,7 +173,7 @@
                                         	<div class="col-md-5">
                                         		<div class="form-group" id="serviceFg">
                                         			<label>Service</label>
-                                                    <select class="select2 form-control custom-select" style="width:95%; height:36px;" aria-describedby="serviceHelp" id="service">
+                                                    <select name="service" class="select2 form-control custom-select" style="width:95%; height:36px;" aria-describedby="serviceHelp" id="service">
                                                         <option>--Select requested service--</option>
                                                         <optgroup label="LAND FREIGHT">
                                                         	<option>PKG GROUND</option>
@@ -213,7 +213,7 @@
                                         	<div class="col-md-3">
                             					<div class="form-group">
 			                                        <label for="classNumber">Class</label>
-			                                        <input type="number" class="form-control" id="classNumber" aria-describedby="classNumberHelp" placeholder="Class" />
+			                                        <input name="classNumber" type="number" value="0" min="0" max="99999" required class="form-control" id="classNumber" aria-describedby="classNumberHelp" placeholder="Class" />
 			                                        <small id="classNumberHelp" class="form-text text-muted">Service Class.</small>
 			                                    </div>
 		                                    	<!-- /form-group (class) -->
@@ -225,7 +225,7 @@
                                         	<div class="col-md-4">
                                         		<div class="form-group">
                                         			<label for="hu">H.U.</label>
-                                        			<input type="number" class="form-control" id="hu" aria-description="huHelp" />
+                                        			<input name="hu" type="number" value="0" min="0" max="999999" required class="form-control" id="hu" aria-description="huHelp" />
                                         			<small id="huHelp" class="form-text text-muted">H.U. Number</small>
                                         		</div>
                                         		<!-- /form-group (H.U.) -->
@@ -234,7 +234,7 @@
                                         	<div class="col-md-4">
                                         		<div class="form-group">
                                         			<label for="weight">WT (Lbs)</label>
-                                        			<input type="number" class="form-control" id="weight" aria-description="weightHelp" />
+                                        			<input name="weight" type="number" value="0" min="0" max="99999999" required class="form-control" id="weight" aria-description="weightHelp" />
                                         			<small id="weightHelp" class="form-text text-muted">Weight (Pounds)</small>
                                         		</div>
                                         		<!-- /form-group (Weight) -->
@@ -243,7 +243,7 @@
                                         	<div class="col-md-4">
                                         		<div class="form-group">
                                         			<label for="dimensions">LxWxH</label>
-                                        			<input type="text" class="form-control" id="dimensions" aria-description="dimensionsHelp" />
+                                        			<input name="dimensions" type="text" class="form-control" id="dimensions" pattern="\d{1,4}x\d{1,4}x\d{1,4}" aria-description="dimensionsHelp" title="Dimensions should match the format for LxWxH, e.g. 10x20x34" />
                                         			<small id="dimensionsHelp" class="form-text text-muted">LxWxH</small>
                                         		</div>
                                         		<!-- /form-group (Dimensions) -->
@@ -253,8 +253,9 @@
                                         <div class="row">
                                         	<div class="col-md-12">
                             					<div class="custom-control custom-checkbox mr-sm-2 mb-3">
-                            						<input type="checkbox" class="custom-control-input" id="requiresCustomerApproval" value="check" />
-			                                        <label class="custom-control-label" for="requiresCustomerApproval">The quote requires customer approval</label>
+                            						<input type="checkbox" class="custom-control-input" id="cbRequiresCustomerApproval" value="true" />
+			                                        <label class="custom-control-label" for="cbRequiresCustomerApproval">The quote requires customer approval</label>
+			                                        <input type="hidden" name="requiresCustomerApproval" id="requiresCustomerApproval" />
 			                                    </div>
 		                                    	<!-- /custom-control (requiresCustomerApproval) -->
 											</div>
@@ -264,8 +265,7 @@
                             		</div>
                             		<!-- /form-body -->
                             		<div class="form-actions">
-		                                <button type="button" id="btnSubmit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-		                                <button type="button" id="btnCancel" class="btn btn-inverse">Cancel</button>
+		                                <button type="submit" id="btnSubmit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
 		                            </div>
 		                            <!-- /form-actions -->
                             	</form>

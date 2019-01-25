@@ -5,16 +5,18 @@
 	<groupId>com.codebeats.axis</groupId>
 	<artifactId>axis-model</artifactId>
 	<packaging>jar</packaging>
-	<version>1.1.0</version>
+	<version>1.3.0</version>
 	<name>axis-model</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/javax.persistence/persistence-api -->
+		<!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.0-api -->
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0.2</version>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
+			<scope>provided</scope>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

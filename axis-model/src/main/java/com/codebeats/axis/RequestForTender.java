@@ -43,23 +43,7 @@ public class RequestForTender implements Serializable {
 	private String pro;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "requestForTender", cascade = CascadeType.ALL)
 	private List<CarrierSelection> carrierSelection = new ArrayList<CarrierSelection>();
-
-	public RequestForTender(ServiceOrderRequest sor) {
-		this.customer = sor.getCustomer();
-		this.customerRef = sor.getCustomerRef();
-		this.vendorRef = sor.getVendorRef();
-		this.description = sor.getDescription();
-		this.requested = sor.getRequested();
-		this.shipper = sor.getShipper();
-		this.consignee = sor.getConsignee();
-		this.carrier = sor.getCarrier();
-		this.service = sor.getService();
-		this.hu = sor.getHu();
-		this.weightLbs = sor.getWeightLbs();
-		this.dimensions = sor.getDimensions();
-		this.classNumber = sor.getClassNumber();
-	}
-
+		
 	public Integer getId() {
 		return id;
 	}

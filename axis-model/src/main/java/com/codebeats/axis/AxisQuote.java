@@ -49,24 +49,6 @@ public class AxisQuote implements Serializable {
 	private List<CarrierQuote> carrierQuotes = new ArrayList<CarrierQuote>();
 	private Boolean approved;
 
-	public AxisQuote(RequestForTender rft) {
-		this.customer = rft.getCustomer();
-		this.customerRef = rft.getCustomerRef();
-		this.vendorRef = rft.getVendorRef();
-		this.description = rft.getDescription();
-		this.requested = rft.getRequested();
-		this.shipper = rft.getShipper();
-		this.consignee = rft.getConsignee();
-		this.carrier = rft.getCarrier();
-		this.service = rft.getService();
-		this.hu = rft.getHu();
-		this.weightLbs = rft.getWeightLbs();
-		this.dimensions = rft.getDimensions();
-		this.classNumber = rft.getClassNumber();
-		this.eta = rft.getEta();
-		this.pro = rft.getPro();
-	}
-
 	public Integer getId() {
 		return id;
 	}

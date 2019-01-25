@@ -50,27 +50,6 @@ public class ServiceOrder implements Serializable {
 	private Boolean completed;
 	private Boolean paid;
 
-	public ServiceOrder(AxisQuote aqn) {
-		this.customer = aqn.getCustomer();
-		this.customerRef = aqn.getCustomerRef();
-		this.vendorRef = aqn.getVendorRef();
-		this.description = aqn.getDescription();
-		this.requested = aqn.getRequested();
-		this.shipper = aqn.getShipper();
-		this.consignee = aqn.getConsignee();
-		this.carrier = aqn.getCarrier();
-		this.service = aqn.getService();
-		this.hu = aqn.getHu();
-		this.weightLbs = aqn.getWeightLbs();
-		this.dimensions = aqn.getDimensions();
-		this.classNumber = aqn.getClassNumber();
-		this.eta = aqn.getEta();
-		this.pro = aqn.getPro();
-		this.cost = aqn.getCost();
-		this.margin = aqn.getMargin();
-		this.price = aqn.getPrice();
-	}
-
 	public Integer getId() {
 		return id;
 	}
