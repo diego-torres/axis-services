@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  *
  */
 @SpringBootApplication
-@ComponentScan(basePackages={"com.codebeats.axisconnect.web", "com.codebeats.axisconnect.web.serviceOrders"})
+@ComponentScan(basePackages={"com.codebeats.axisconnect.web", "com.codebeats.axisconnect.web.jbpm.sor"})
 public class SpringBootWebApplication {
 
 	/**

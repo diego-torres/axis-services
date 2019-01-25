@@ -25,12 +25,11 @@ public class AppErrorController implements ErrorController {
 
 	@RequestMapping("/error")
 	public String handleError(Model model, WebRequest webRequest) {
-		System.out.println("Handling error");
 		final Throwable error = errorAttributes.getError(webRequest);
 		model.addAttribute("exception", error);
 		model.addAttribute("message", error == null ? "" : error.getMessage());
-		System.out.println(error);
-		if(error != null) error.printStackTrace();
+		if (error != null)
+			error.printStackTrace();
 		return "public/error";
 	}
 

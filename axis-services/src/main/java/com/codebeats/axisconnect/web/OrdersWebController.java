@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codebeats.axis.ServiceOrderRequest;
+import com.codebeats.axisconnect.web.jbpm.sor.ServiceOrderRequestService;
 import com.codebeats.axisconnect.web.serviceOrders.PartialServiceOrder;
 import com.codebeats.axisconnect.web.serviceOrders.PartialServiceOrderComment;
 import com.codebeats.axisconnect.web.serviceOrders.ServiceOrderService;
@@ -48,6 +49,9 @@ public class OrdersWebController {
 
 	@Autowired
 	public ServiceOrderService orderService;
+	
+	@Autowired
+	public ServiceOrderRequestService sorService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -92,7 +96,6 @@ public class OrdersWebController {
 	public String createOrder(Authentication auth, Model model) {
 		Principal principal = (Principal) auth.getPrincipal();
 		model.addAttribute("principal", principal.getName());
-		model.addAttribute("sor", new ServiceOrderRequest());
 		return "admin/pages/orders/create";
 	}
 
@@ -104,10 +107,7 @@ public class OrdersWebController {
 	 */
 	@PostMapping("/create")
 	public String createServiceOrder(@ModelAttribute("serviceOrderForm") ServiceOrderRequest sor) {
-		/*if (!pso.isStartProcessInstance()) {
-			orderService.addPartialServiceOrder(pso, auth.getPrincipal().toString());
-		}*/
-		System.out.println(sor);
+		sorService.addServiceOrderRequest(sor);
 		return "redirect:/orders/";
 	}
 
