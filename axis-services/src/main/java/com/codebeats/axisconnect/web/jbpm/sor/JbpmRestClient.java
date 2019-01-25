@@ -1,6 +1,8 @@
 package com.codebeats.axisconnect.web.jbpm.sor;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -48,7 +50,7 @@ public abstract class JbpmRestClient {
 			os.flush();
 			
 			// This is a fire and forget request, get results with an snippet like this:
-			/*
+			
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
 				conn.disconnect();
 				throw new RuntimeException("Failed : HTTP error code : "
@@ -63,7 +65,7 @@ public abstract class JbpmRestClient {
 			while ((output = br.readLine()) != null) {
 
 				System.out.println(output);
-			}*/
+			}
 			
 			conn.disconnect();
 
