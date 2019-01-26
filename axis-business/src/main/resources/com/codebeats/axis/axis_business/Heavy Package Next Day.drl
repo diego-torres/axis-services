@@ -1,0 +1,14 @@
+package com.codebeats.axis.axis_business;
+
+import com.codebeats.axis.Validation;
+import com.codebeats.axis.ServiceOrderRequest;
+
+rule "Heavy Package Next Day"
+    ruleflow-group "sor_validation"
+    when
+        $so: ServiceOrderRequest( service == "PKG NEXT DAY", weightLbs > 50000 )
+        $val: Validation( )
+    then
+        $val.addValidationError("weight", "The maximum weight for PKG NEXT DAY is 50000, you should use PKG GROUND for bigger loads.");
+        System.out.println("Heavy Package Next Day");
+end

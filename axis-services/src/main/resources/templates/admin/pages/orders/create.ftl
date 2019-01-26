@@ -233,8 +233,8 @@
                                         	<!-- /column (H.U.) -->
                                         	<div class="col-md-4">
                                         		<div class="form-group">
-                                        			<label for="weight">WT (Lbs)</label>
-                                        			<input name="weight" type="number" value="0" min="0" max="99999999" required class="form-control" id="weight" aria-description="weightHelp" />
+                                        			<label for="weightLbs">WT (Lbs)</label>
+                                        			<input name="weightLbs" type="number" value="0" min="0" max="99999999" required class="form-control" id="weightLbs" aria-description="weightHelp" />
                                         			<small id="weightHelp" class="form-text text-muted">Weight (Pounds)</small>
                                         		</div>
                                         		<!-- /form-group (Weight) -->
@@ -265,7 +265,8 @@
                             		</div>
                             		<!-- /form-body -->
                             		<div class="form-actions">
-		                                <button type="submit" id="btnSubmit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                            			<input type="submit" style="display:none" />
+		                                <button type="button" id="btnSubmit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
 		                            </div>
 		                            <!-- /form-actions -->
                             	</form>

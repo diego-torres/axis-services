@@ -13,12 +13,15 @@ public class ServiceOrderRequestService extends JbpmRestClient {
 		ObjectMapper om = new ObjectMapper();
 		String sorJson;
 		try {
-			sorJson = om.writeValueAsString(sor);
+			sorJson = sorStringWrapper( om.writeValueAsString(sor) );
 			System.out.println(sorJson);
 			startProcessInstance("axis-business", "com.codebeats.axis.axis_business.axis-process", sorJson);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private String sorStringWrapper(String sor) {
+		return "{\"serviceOrderRequest\":{\"com.codebeats.axis.ServiceOrderRequest\":" + sor + "}}";
 	}
 }

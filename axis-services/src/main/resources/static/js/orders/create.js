@@ -7,7 +7,10 @@ $(function() {
 
 	// TODO: Submit click event
 	$('#btnSubmit').click(function() {
-		return validateForm();
+		if(validateForm()) {
+			document.forms['serviceOrderForm'].submit();
+			return false;
+		}
 	});
 });
 
