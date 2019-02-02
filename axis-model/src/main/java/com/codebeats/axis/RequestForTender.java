@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Entity
 @Table(name = "request_for_tender")
 public class RequestForTender implements Serializable {
@@ -43,7 +46,7 @@ public class RequestForTender implements Serializable {
 	private String pro;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "requestForTender", cascade = CascadeType.ALL)
 	private List<CarrierSelection> carrierSelection = new ArrayList<CarrierSelection>();
-		
+
 	public Integer getId() {
 		return id;
 	}
@@ -200,11 +203,13 @@ public class RequestForTender implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RequestForTender [id=" + id + ", customer=" + customer + ", customerRef=" + customerRef + ", vendorRef="
-				+ vendorRef + ", description=" + description + ", requested=" + requested + ", shipper=" + shipper
-				+ ", consignee=" + consignee + ", carrier=" + carrier + ", service=" + service + ", status=" + status
-				+ ", hu=" + hu + ", weightLbs=" + weightLbs + ", dimensions=" + dimensions + ", classNumber="
-				+ classNumber + ", eta=" + eta + ", pro=" + pro + ", carrierSelection=" + carrierSelection + "]";
+		ObjectMapper om = new ObjectMapper();
+		try {
+			return om.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "{}";
+		}
 	}
 
 	@Override

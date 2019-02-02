@@ -68,7 +68,7 @@ public class OrdersWebController {
 	public String ordersList(Authentication auth, Model model) {
 		Principal principal = (Principal) auth.getPrincipal();
 		model.addAttribute("principal", principal.getName());
-		model.addAttribute("serviceOrders", orderService.getActiveServiceOrders());
+		model.addAttribute("serviceOrderRequests", sorService.getActiveSor(principal.getName()));
 		return "admin/pages/orders/list";
 	}
 
@@ -106,8 +106,9 @@ public class OrdersWebController {
 	 * @return
 	 */
 	@PostMapping("/create")
-	public String createServiceOrder(@ModelAttribute("serviceOrderForm") ServiceOrderRequest sor) {
-		sorService.addServiceOrderRequest(sor);
+	public String createServiceOrder(@ModelAttribute("serviceOrderForm") ServiceOrderRequest sor, Authentication auth) {
+		Principal principal = (Principal) auth.getPrincipal();
+		sorService.addServiceOrderRequest(sor, principal.getName());
 		return "redirect:/orders/";
 	}
 

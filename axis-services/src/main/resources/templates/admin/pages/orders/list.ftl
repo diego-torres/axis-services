@@ -1,140 +1,162 @@
 <#import "/spring.ftl" as spring />
-<#import "../../lib/navigation.ftl" as navigation />
+<#import "../../lib/head.ftl" as head />
+<#import "../../lib/preloader.ftl" as preloader />
+<#import "../../lib/topbar.ftl" as topbar />
+<#import "../../lib/leftbar.ftl" as leftbar />
+<#import "../../lib/rightbar.ftl" as rightbar />
+<#import "../../lib/footer.ftl" as footer />
+<#import "../../lib/jquery_scripts.ftl" as jscripts />
 <#assign xhtmlCompliant = true in spring />
+<#assign aDateTime = .now>
+<#assign aDate = aDateTime?date>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Axis Connect US - Service Orders List</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="../vendor/bootstrap_3_3_7/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-    
-    <!-- Data Tables CSS -->
-    <link href="../vendor/DataTables/datatables.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <@head.nav pageTitle="Axis BPS - SOR Active List" />
+    <!-- page CSS -->
 </head>
 
-<body>
-    <div id="wrapper">
-
-        <@navigation.nav />
-
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Service Orders</h1>
+<body class="skin-blue fixed-layout">
+    <@preloader.nav />
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <@topbar.nav />
+        <@leftbar.nav />
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-5 align-self-center">
+                        <h4 class="text-themecolor">Create SOR (Service Order Request)</h4>
+                    </div>
+                    <div class="col-md-7 align-self-center text-right">
+                        <div class="d-flex justify-content-end align-items-center">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">Orders</a></li>
+                                <li class="breadcrumb-item active">List</li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.col-lg-12 -->
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- row -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                        	<div class="card-body">
+                        		<h4 class="card-title">Service Order Request - Active</h4>
+                            	<h6 class="card-subtitle">List of active SOR.</h6>
+                            	<div class="table-responsive m-t-40">
+                            		<table id="activeSor" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            			<thead>
+                                            <tr>
+                                            	<th><i class="fas fa-paperclip"></i></th>
+                                            	<th><i class="far fa-comment"></i></th>
+                                            	<th><i class="fas fa-bug"></i></th>
+                                            	<th><i class="fas fa-hand-holding-usd"></i></th>
+                                                <th>Id</th>
+                                                <th>SOR</th>
+                                                <th>Customer</th>
+                                                <th>Description</th>
+                                                <th>Shipper</th>
+                                                <th>Consignee</th>
+                                                <th>Customer Ref</th>
+                                                <th>Vendor Ref</th>
+                                                <th>Requested Date</th>
+                                                <th>Shipping Date</th>
+                                                <th>Task Date</th>
+                                                <th>Service</th>
+                                                <th>Class</th>
+                                                <th>H.U.</th>
+                                                <th>Weight</th>
+                                                <th>Dimensions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<#list serviceOrderRequests as sor>
+                                        	<tr>
+                                        		<th><i class="fas fa-paperclip"></i></th>
+                                        		<th><i style="color:blue;" class="far fa-comment"></i></th>
+                                        		<th><#if sor.validation?? && sor.validation.errorsCount gt 0><i style="color:red;" class="fas fa-bug"></i></#if></th>
+                                        		<th><#if sor.requiresCustomerApproval?? && sor.requiresCustomerApproval><i style="color:green;" class="fas fa-hand-holding-usd"></i></#if></th>
+                                        		<th>${sor.processInstanceId}</th>
+                                                <th>${sor.id}</th>
+                                                <th>${sor.customer}</th>
+                                                <th>${sor.description}</th>
+                                                <th><#if sor.shipper??>${sor.shipper}</#if></th>
+                                                <th><#if sor.consignee??>${sor.consignee}</#if></th>
+                                                <th><#if sor.customerRef??>${sor.customerRef}</#if></th>
+                                                <th><#if sor.vendorRef??>${sor.vendorRef}</#if></th>
+                                                <th><#if sor.requestedDate??>${sor.requestedDate?date?iso_utc}</#if></th>
+                                                <th><#if sor.requestedShippingDate??>${sor.requestedShippingDate?date?iso_utc}</#if></th>
+                                                <th><#if sor.taskDate??>${sor.taskDate?date?iso_utc}</#if></th>
+                                                <th><#if sor.service??>${sor.service}</#if></th>
+                                                <th><#if sor.classNumber??>${sor.classNumber}</#if></th>
+                                                <th><#if sor.hu??>${sor.hu}</#if></th>
+                                                <th><#if sor.weightLbs??>${sor.weightLbs}</#if></th>
+                                                <th><#if sor.dimensions??>${sor.dimensions}</#if></th>
+                                            </tr>
+                                        	</#list>
+                                        </tbody>
+									</table>
+								</div>
+								<!-- /table-responsive -->
+                            </div>
+                            <!-- /card-body -->
+                        </div>
+                        <!-- /card -->
+                    </div>
+                    <!-- /column-12 -->
+                </div>
+                <!-- row -->
+                
+                <@rightbar.nav />
             </div>
-            <!-- /.row -->
-            <div class="row">
-            	<table id="service_orders_table" class="display">
-            		<thead>
-            			<th>&nbsp;</th>
-            			<th>Detail</th>
-            			<th>Hot</th>
-            			<th>Axis Ref</th>
-            			<th>PO / Customer Ref</th>
-            			<th>SO / Vendor Ref</th>
-            			<th>Shipper</th>
-            			<th>Consignee</th>
-            			<th>Carrier</th>
-            			<th>Service</th>
-            			<th>Status</th>
-            			<th>H.U.</th>
-            			<th>WT</th>
-            			<th>Quote#</th>
-            			<th>Pickup #</th>
-            			<th>PRO #</th>
-            			<th>Duration</th>
-            			<th>Requested Date</th>
-            			<th>Shipping Date</th>
-            			<th>ETA</th>
-            			<th>Delivery</th>
-            			<th>Comments Log</th>
-            		</thead>
-            		<tbody>
-            			<#list serviceOrders as order>
-            				<tr>
-            					<td>&nbsp;</td>
-            					<#if order.status == "ORDER ENTRY">
-            						<td><i style="cursor:pointer;" onclick="return editServiceOrder('OE${order.id?string["000"]}');" class="fa fa-pencil fa-fw" /></td>
-            						<td><#if order.hot><i class="fa fa-fire fa-fw" /></#if></td>
-            						<td>OE${order.id?string["000"]}</td>
-            					<#else>
-            						<td><i style="cursor:pointer;" onclick="return editServiceOrder('AX${order.id?string["000"]}');" class="fa fa-pencil fa-fw" /></td>
-            						<td><#if order.hot><i class="fa fa-fire fa-fw" /></#if></td>
-            						<td>AX${order.id?string["000"]}</td>
-            					</#if>
-            					<td><#if order.custRef??>${order.custRef}</#if></td>
-            					<td><#if order.vendorRef??>${order.vendorRef}</#if></td>
-            					<td><#if order.shipper??>${order.shipper}</#if></td>
-            					<td><#if order.consignee??>${order.consignee}</#if></td>
-            					<td><#if order.carrier??>${order.carrier}</#if></td>
-            					<td><#if order.service??>${order.service}</#if></td>
-            					<td>${order.status}</td>
-            					<td><#if order.hu??>${order.hu}</#if></td>
-            					<td><#if order.wt??>${order.wt}</#if></td>
-            					<td><#if order.quoteId??>${order.quoteId}</#if></td>
-            					<td><#if order.pickupId??>${order.pickupId}</#if></td>
-            					<td><#if order.proId??>${order.proId}</#if></td>
-            					<td><#if order.duration??>${order.duration}</#if></td>
-            					<td><#if order.requested??>${order.requested?date}</#if></td>
-            					<td><#if order.shipping??>${order.shipping?date}</#if></td>
-            					<td><#if order.eta??>${order.eta?date}</#if></td>
-            					<td><#if order.delivery??>${order.delivery?date}</#if></td>
-            					<td><#if order.comments??>${order.comments}</#if></td>
-            				</tr>
-            			</#list>
-            		</tbody>
-            	</table>
-            </row>
-            <!-- /.row -->
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
         </div>
-        <!-- /#page-wrapper -->
-
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+        <@footer.nav />
     </div>
-    <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap_3_3_7/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-    
-    <!-- Data Tables Plugin JavaScript -->
-    <script src="../vendor/DataTables/datatables.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
-    <script src="../dist/js/active-orders-list.js"></script>
-
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+   <@jscripts.nav />
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- This is data table -->
+    <script src="/assets/node_modules/datatables/datatables.min.js"></script>
+    <!-- start - This is for export functionality only -->
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+    <!-- end - This is for export functionality only -->
+	<script src="/js/orders/list.js" type="text/javascript"></script>
 </body>
 
 </html>

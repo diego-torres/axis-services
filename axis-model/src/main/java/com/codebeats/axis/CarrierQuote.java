@@ -16,6 +16,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity
 @Table(name = "carrier_quote")
@@ -111,9 +113,13 @@ public class CarrierQuote implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CarrierQuote [id=" + id + ", reference=" + reference + ", carrier=" + carrier + ", description="
-				+ description + ", url=" + url + ", totalPrice=" + totalPrice + ", eta=" + eta + ", selected="
-				+ selected + "]";
+		ObjectMapper om = new ObjectMapper();
+		try {
+			return om.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "{}";
+		}
 	}
 
 	@Override
@@ -146,7 +152,5 @@ public class CarrierQuote implements Serializable {
 			return false;
 		return true;
 	}
-
-	
 
 }

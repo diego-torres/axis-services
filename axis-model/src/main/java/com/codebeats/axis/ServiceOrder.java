@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Entity
 @Table(name = "service_order")
 public class ServiceOrder implements Serializable {
@@ -253,12 +256,13 @@ public class ServiceOrder implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ServiceOrder [id=" + id + ", customer=" + customer + ", customerRef=" + customerRef + ", vendorRef="
-				+ vendorRef + ", description=" + description + ", requested=" + requested + ", shipper=" + shipper
-				+ ", consignee=" + consignee + ", carrier=" + carrier + ", service=" + service + ", status=" + status
-				+ ", hu=" + hu + ", weightLbs=" + weightLbs + ", dimensions=" + dimensions + ", classNumber="
-				+ classNumber + ", eta=" + eta + ", pro=" + pro + ", cost=" + cost + ", margin=" + margin + ", price="
-				+ price + ", carrierBookings=" + carrierBookings + ", completed=" + completed + ", paid=" + paid + "]";
+		ObjectMapper om = new ObjectMapper();
+		try {
+			return om.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "{}";
+		}
 	}
 
 	@Override

@@ -7,7 +7,7 @@ $(function() {
 
 	// TODO: Submit click event
 	$('#btnSubmit').click(function() {
-		if(validateForm()) {
+		if (validateForm()) {
 			document.forms['serviceOrderForm'].submit();
 			return false;
 		}
@@ -43,7 +43,7 @@ function validateForm() {
 		validForm = false;
 	}
 
-	$('requiresCustomerApproval').val(
+	$('#requiresCustomerApproval').val(
 			$('#cbRequiresCustomerApproval').val() === 'true');
 	if ($('classNumber').val() === '') {
 		$('classNumber').val(0);

@@ -63,7 +63,7 @@
 		<dependency>
 			<groupId>com.codebeats.axis</groupId>
 			<artifactId>axis-model</artifactId>
-			<version>1.4.1</version>
+			<version>2.0.0</version>
 		</dependency>
 
 		<dependency>

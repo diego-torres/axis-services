@@ -18,15 +18,15 @@ public class ServiceOrderRequest implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private Integer processInstanceId;
 	private String customer;
 	private String customerRef;
 	private String vendorRef;
 	private String description;
 	@Temporal(TemporalType.DATE)
-	private Date requested;
+	private Date requestedShippingDate;
 	private String shipper;
 	private String consignee;
-	private String carrier;
 	private String service;
 	private String status;
 	private String hu;
@@ -75,14 +75,6 @@ public class ServiceOrderRequest implements Serializable {
 		this.description = description;
 	}
 
-	public Date getRequested() {
-		return this.requested;
-	}
-
-	public void setRequested(Date requested) {
-		this.requested = requested;
-	}
-
 	public String getShipper() {
 		return this.shipper;
 	}
@@ -97,14 +89,6 @@ public class ServiceOrderRequest implements Serializable {
 
 	public void setConsignee(String consignee) {
 		this.consignee = consignee;
-	}
-
-	public String getCarrier() {
-		return this.carrier;
-	}
-
-	public void setCarrier(String carrier) {
-		this.carrier = carrier;
 	}
 
 	public String getService() {
@@ -162,16 +146,44 @@ public class ServiceOrderRequest implements Serializable {
 	public void setRequiresCustomerApproval(Boolean requiresCustomerApproval) {
 		this.requiresCustomerApproval = requiresCustomerApproval;
 	}
+	
+	public Integer getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public void setProcessInstanceId(Integer processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+
+
+	public Date getRequestedShippingDate() {
+		return requestedShippingDate;
+	}
+
+	public void setRequestedShippingDate(Date requestedShippingDate) {
+		this.requestedShippingDate = requestedShippingDate;
+	}
 
 	
 
 	@Override
 	public String toString() {
-		return "ServiceOrderRequest [id=" + id + ", customer=" + customer + ", customerRef=" + customerRef
-				+ ", vendorRef=" + vendorRef + ", description=" + description + ", requested=" + requested
-				+ ", shipper=" + shipper + ", consignee=" + consignee + ", carrier=" + carrier + ", service=" + service
-				+ ", status=" + status + ", hu=" + hu + ", weightLbs=" + weightLbs + ", dimensions=" + dimensions
-				+ ", classNumber=" + classNumber + ", requiresCustomerApproval=" + requiresCustomerApproval + "]";
+		return "{\"" + (id != null ? "id\":\"" + id + "\", " : "")
+				+ (processInstanceId != null ? "processInstanceId\":\"" + processInstanceId + "\", " : "")
+				+ (customer != null ? "customer\":\"" + customer + "\", " : "")
+				+ (customerRef != null ? "customerRef\":\"" + customerRef + "\", " : "")
+				+ (vendorRef != null ? "vendorRef\":\"" + vendorRef + "\", " : "")
+				+ (description != null ? "description\":\"" + description + "\", " : "")
+				+ (requestedShippingDate != null ? "requestedShippingDate\":\"" + requestedShippingDate + "\", " : "")
+				+ (shipper != null ? "shipper\":\"" + shipper + "\", " : "")
+				+ (consignee != null ? "consignee\":\"" + consignee + "\", " : "")
+				+ (service != null ? "service\":\"" + service + "\", " : "")
+				+ (status != null ? "status\":\"" + status + "\", " : "") + (hu != null ? "hu\":\"" + hu + "\", " : "")
+				+ "weightLbs\":\"" + weightLbs + "\", "
+				+ (dimensions != null ? "dimensions\":\"" + dimensions + "\", " : "") + "classNumber\":\"" + classNumber
+				+ "\", "
+				+ (requiresCustomerApproval != null ? "requiresCustomerApproval\":\"" + requiresCustomerApproval : "")
+				+ "}";
 	}
 
 	@Override
@@ -198,5 +210,4 @@ public class ServiceOrderRequest implements Serializable {
 			return false;
 		return true;
 	}
-
 }

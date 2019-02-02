@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Entity
 @Table(name = "carrier_booking")
@@ -70,7 +72,13 @@ public class CarrierBooking implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CarrierBooking [id=" + id + ", bookingNumbers=" + bookingNumbers + ", carrier=" + carrier + "]";
+		ObjectMapper om = new ObjectMapper();
+		try {
+			return om.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "{}";
+		}
 	}
 
 	@Override

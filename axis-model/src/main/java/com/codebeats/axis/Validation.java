@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Validation implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Map<String, String> errors = new HashMap<String, String>();
@@ -30,7 +33,13 @@ public class Validation implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Validation [errors=" + errors + ", errorCount=" + getErrorsCount() + "]";
+		ObjectMapper om = new ObjectMapper();
+		try {
+			return om.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return "{}";
+		}
 	}
 
 }

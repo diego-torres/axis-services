@@ -111,18 +111,6 @@
 											<!-- /column (consignee) -->
 										</div>
 										<!-- /row (consignee) -->
-										<div class="row">
-                            				<div class="col-md-12 ">
-                            					<div class="form-group">
-		                                        	<label for="carrier">Carrier</label>
-		                                        	<input name="carrier" type="text" class="form-control" id="carrier" aria-describedby="carrierHelp" placeholder="Enter carrier name" />
-		                                        	<small id="carrierHelp" class="form-text text-muted">Use carrier company name or code by catalog.</small>
-		                                    	</div>
-		                                    	<!-- /form-group (carrier) -->
-											</div>
-											<!-- /column (carrier) -->
-										</div>
-										<!-- /row (carrier) -->
 										<h3 class="box-title m-t-40">Reference Numbers</h3>
                                         <hr>
                                         <div class="row">
@@ -163,8 +151,8 @@
                                         <div class="row">
                                         	<div class="col-md-4">
                                         		<div class="form-group">
-			                                        <label for="requestedDate">Requested Date</label>
-			                                        <input name="requestedDate" type="date" class="form-control" id="requestedDate" aria-describedby="requestedDateHelp" />
+			                                        <label for="requestedShippingDate">Shipping Date</label>
+			                                        <input name="requestedShippingDate" type="date" class="form-control" id="requestedShippingDate" aria-describedby="requestedDateHelp" />
 			                                        <small id="requestedDateHelp" class="form-text text-muted">Date when the requested service should be delivered.</small>
 			                                    </div>
 			                                    <!-- /form-group (requestedDate) -->
