@@ -21,7 +21,7 @@ $(function () {
             $("body").removeClass("mini-sidebar");
             $('.navbar-brand span').show();
         }
-         var height = ((window.innerHeight > 0) ? window.innerHeight : this.screen.height) - 1;
+        var height = ((window.innerHeight > 0) ? window.innerHeight : this.screen.height) - 1;
         height = height - topOffset;
         if (height < 1) height = 1;
         if (height > topOffset) {
@@ -30,6 +30,7 @@ $(function () {
     };
     $(window).ready(set);
     $(window).on("resize", set);
+    
     // ============================================================== 
     // Theme options
     // ==============================================================     
@@ -189,5 +190,5 @@ $(function () {
     $("#themecolors").on("click", "a", function () {
         $("#themecolors li a").removeClass("working"), 
         $(this).addClass("working")
-    })
+    });
 });

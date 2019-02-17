@@ -67,10 +67,10 @@
                             		<table id="activeSor" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                             			<thead>
                                             <tr>
-                                            	<th><i class="fas fa-paperclip"></i></th>
-                                            	<th><i class="far fa-comment"></i></th>
-                                            	<th><i class="fas fa-bug"></i></th>
-                                            	<th><i class="fas fa-hand-holding-usd"></i></th>
+                                            	<th><i class="fas fa-paperclip" data-toggle="tooltip" data-placement="top" title="Documents"></i></th>
+                                            	<th><i class="far fa-comment" data-toggle="tooltip" data-placement="top" title="Comments"></i></th>
+                                            	<th><i class="fas fa-bug" data-toggle="tooltip" data-placement="top" title="Validation errors"></i></th>
+                                            	<th><i class="fas fa-hand-holding-usd" data-toggle="tooltip" data-placement="top" title="Requires customer approval?"></i></th>
                                                 <th>Id</th>
                                                 <th>SOR</th>
                                                 <th>Customer</th>
@@ -92,10 +92,10 @@
                                         <tbody>
                                         	<#list serviceOrderRequests as sor>
                                         	<tr>
-                                        		<th><i class="fas fa-paperclip"></i></th>
+                                        		<th><i class="fas fa-paperclip" data-toggle="modal" data-target="#attmodal"></i></th>
                                         		<th><i style="color:blue;" class="far fa-comment"></i></th>
-                                        		<th><#if sor.validation?? && sor.validation.errorsCount gt 0><i style="color:red;" class="fas fa-bug"></i></#if></th>
-                                        		<th><#if sor.requiresCustomerApproval?? && sor.requiresCustomerApproval><i style="color:green;" class="fas fa-hand-holding-usd"></i></#if></th>
+                                        		<th><#if sor.validation?? && sor.validation.errorsCount gt 0><i style="color:red;" class="fas fa-bug" data-toggle="modal" data-target="#emodal_${sor.id}"></i></#if></th>
+                                        		<th><#if sor.requiresCustomerApproval?? && sor.requiresCustomerApproval><i style="color:green;" class="fas fa-hand-holding-usd" data-toggle="tooltip" data-placement="top" title="This service requires customer approval at quote level"></i></#if></th>
                                         		<th>${sor.processInstanceId}</th>
                                                 <th>${sor.id}</th>
                                                 <th>${sor.customer}</th>
@@ -127,6 +127,93 @@
                 </div>
                 <!-- row -->
                 
+                <#list serviceOrderRequests as esor>
+                	<#if esor.validation?? && esor.validation.errorsCount gt 0>
+                	<!-- validation errors modal content -->
+					<div id="emodal_${esor.id}" class="modal fade long-modal" tabindex="-1" role="dialog" aria-labelledby="ml_${esor.id}" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="ml_${esor.id}">Validation Errors for SOR #${esor.id}</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                	<#list esor.validation.errors?keys as errorField>
+                                		<h4>Error found for <b>${errorField}</b></h4>
+                                		<p>${esor.validation.errors[errorField]}</p>
+                                	</#list>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.emodal_esor.id -->
+                	</#if>
+                </#list>
+                
+                <!-- TODO: Attachments modal -->
+				<div id="attmodal" class="modal fade long-modal" tabindex="-1" role="dialog" aria-labelledby="ml_attmodal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="ml_attmodal">Documents List</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                            	<table id="attachmentsTable" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            		<thead>
+                                        <tr>
+                                        	<th></th>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Size</th>
+                                            <th>Created On</th>
+                                            <th>Created By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    	<tr>
+                                        	<th><i class="fas fa-paperclip"></i></th>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Size</th>
+                                            <th>Created On</th>
+                                            <th>Created By</th>
+                                        </tr>
+                                        <tr>
+                                        	<th><i class="fas fa-paperclip"></i></th>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Size</th>
+                                            <th>Created On</th>
+                                            <th>Created By</th>
+                                        </tr>
+                                        <tr>
+                                        	<th><i class="fas fa-paperclip"></i></th>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Size</th>
+                                            <th>Created On</th>
+                                            <th>Created By</th>
+                                        </tr>
+                                    </tbody>
+                            	</table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
+				<!-- /.attmodal -->
+            	<!-- TODO: Comments modal -->
+                
                 <@rightbar.nav />
             </div>
             <!-- ============================================================== -->
@@ -157,6 +244,10 @@
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
     <!-- end - This is for export functionality only -->
 	<script src="/js/orders/list.js" type="text/javascript"></script>
+	 <!--stickey kit -->
+    <script src="/assets/node_modules/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="/assets/node_modules/sparkline/jquery.sparkline.min.js"></script>
+
 </body>
 
 </html>

@@ -28,10 +28,9 @@
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="true"><i class="fas fa-keyboard"></i><span class="hide-menu">SOR</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="/orders/create">Order Entry</a></li>
-                        <li><a href="form-layout.html">Validation</a></li>
-                        <li><a href="form-addons.html">Completed</a></li>
-                        <li><a href="form-basic.html">Exportable list</a></li>
-                        <li><a href="form-layout.html">Dashboard</a></li>
+                        <li><a href="/orders/">Validation</a></li>
+                        <li><a href="/orders/all">All SORs</a></li>
+                        <li><a href="/orders/dashboard">Dashboard</a></li>
                     </ul>
                 </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="true"><i class="fas fa-diagnoses"></i><span class="hide-menu">RFT</span></a>

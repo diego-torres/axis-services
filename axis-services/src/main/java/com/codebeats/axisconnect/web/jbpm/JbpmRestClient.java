@@ -7,9 +7,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -148,12 +145,8 @@ public abstract class JbpmRestClient {
 
 				String rsd = sorNode.path("requestedShippingDate").path("java.sql.Date").asText();
 				if (!"".equals(rsd)) {
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					try {
-						sor.setRequestedShippingDate(df.parse(rsd));
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
+					//DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					sor.setRequestedShippingDate(new Date(Long.parseLong(rsd)));
 				}
 
 				// Complete all fields (Process instance date and task dates).

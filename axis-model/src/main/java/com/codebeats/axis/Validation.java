@@ -12,7 +12,13 @@ public class Validation implements Serializable {
 	private Map<String, String> errors = new HashMap<String, String>();
 
 	public void addValidationError(String field, String description) {
-		errors.put(field, description);
+		if(errors.containsKey(field)) {
+			String previousValue = errors.get(field);
+			errors.remove(field);
+			errors.put(field, previousValue + "; also, " + description);
+		} else {
+			errors.put(field, description);
+		}
 	}
 
 	public Map<String, String> getErrors() {

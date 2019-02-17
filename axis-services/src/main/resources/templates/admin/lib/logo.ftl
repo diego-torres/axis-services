@@ -12,7 +12,7 @@
             <i class="fab fa-ravelry"></i>
         </b>
         <!--End Logo icon -->
-        <!-- Logo text --><span>
+        <!-- Logo text --><span style="display:none;">
             <!-- dark Logo text -->
             <img src="/img/logaxis_transparent.png" style="width:85%" alt="homepage" class="dark-logo" />
             <!-- Light Logo text -->    
